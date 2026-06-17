@@ -1,6 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const swaggerUi  = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 require('./config/passport');
 
@@ -36,6 +38,9 @@ app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/checkout', checkoutRouter);
 app.use('/api/orders', ordersRouter);
+
+// Swagger UI — served outside /api so it doesn't go through the API routers.
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorHandler);
 

@@ -1,11 +1,178 @@
+﻿// products.routes.js — Routes for product endpoints.
+// Mounted at /api/products in app.js.
+// GET endpoints are public. POST, PUT, DELETE require authentication.
+
 const { Router } = require('express');
 
 const router = Router();
 
-// GET    /api/products      — task 9
-// GET    /api/products/:id  — task 9
-// POST   /api/products      — task 9
-// PUT    /api/products/:id  — task 9
-// DELETE /api/products/:id  — task 9
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: List all products
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Array of all products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Product'
+ */
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   get:
+ *     summary: Get a single product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *     responses:
+ *       200:
+ *         description: Product data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 product:
+ *                   $ref: '#/components/schemas/Product'
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /products:
+ *   post:
+ *     summary: Create a new product
+ *     tags: [Products]
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - price
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Wireless Headphones
+ *               description:
+ *                 type: string
+ *                 example: Noise-cancelling over-ear headphones
+ *               price:
+ *                 type: number
+ *                 example: 79.99
+ *               stock:
+ *                 type: integer
+ *                 example: 50
+ *     responses:
+ *       201:
+ *         description: Product created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 product:
+ *                   $ref: '#/components/schemas/Product'
+ *       400:
+ *         $ref: '#/components/responses/BadRequest'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ */
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   put:
+ *     summary: Update a product (any subset of fields)
+ *     tags: [Products]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Wireless Headphones Pro
+ *               description:
+ *                 type: string
+ *                 example: Updated description
+ *               price:
+ *                 type: number
+ *                 example: 89.99
+ *               stock:
+ *                 type: integer
+ *                 example: 40
+ *     responses:
+ *       200:
+ *         description: Updated product data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 product:
+ *                   $ref: '#/components/schemas/Product'
+ *       400:
+ *         $ref: '#/components/responses/BadRequest'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   delete:
+ *     summary: Delete a product
+ *     tags: [Products]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *     responses:
+ *       204:
+ *         description: Product deleted
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ */
 
 module.exports = router;
