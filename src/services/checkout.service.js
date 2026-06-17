@@ -18,6 +18,11 @@ async function checkout(userId) {
 
     // Step 1: Load the user's cart and its items.
     const cart = await checkoutData.getCartByUserId(userId, client);
+    if (!cart) {
+      const err = new Error('Cart not found for this user');
+      err.status = 500;
+      throw err;
+    }
     const items = await checkoutData.getCartItems(cart.id, client);
 
     if (items.length === 0) {

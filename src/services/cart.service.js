@@ -10,6 +10,11 @@ const cartData = require('../data/cart.data');
 // Fetch the current user's cart with all items and product details.
 async function getCart(userId) {
   const cart  = await cartData.getCartByUserId(userId);
+  if (!cart) {
+    const err = new Error('Cart not found for this user');
+    err.status = 500;
+    throw err;
+  }
   const items = await cartData.getCartItems(cart.id);
   return { id: cart.id, items };
 }
@@ -28,6 +33,11 @@ async function addItem(userId, productId, quantity) {
   }
 
   const cart = await cartData.getCartByUserId(userId);
+  if (!cart) {
+    const err = new Error('Cart not found for this user');
+    err.status = 500;
+    throw err;
+  }
 
   let item;
   try {
@@ -55,6 +65,11 @@ async function updateItemQuantity(userId, productId, quantity) {
   }
 
   const cart = await cartData.getCartByUserId(userId);
+  if (!cart) {
+    const err = new Error('Cart not found for this user');
+    err.status = 500;
+    throw err;
+  }
   const item = await cartData.updateItemQuantity(cart.id, productId, quantity);
 
   if (!item) {
@@ -68,7 +83,12 @@ async function updateItemQuantity(userId, productId, quantity) {
 
 // Remove one item from the cart.
 async function removeItem(userId, productId) {
-  const cart    = await cartData.getCartByUserId(userId);
+  const cart = await cartData.getCartByUserId(userId);
+  if (!cart) {
+    const err = new Error('Cart not found for this user');
+    err.status = 500;
+    throw err;
+  }
   const deleted = await cartData.removeItem(cart.id, productId);
 
   if (!deleted) {
@@ -82,6 +102,11 @@ async function removeItem(userId, productId) {
 // Clearing an already-empty cart is not an error.
 async function clearCart(userId) {
   const cart = await cartData.getCartByUserId(userId);
+  if (!cart) {
+    const err = new Error('Cart not found for this user');
+    err.status = 500;
+    throw err;
+  }
   await cartData.clearCart(cart.id);
 }
 
