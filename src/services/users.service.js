@@ -13,7 +13,7 @@
 const bcrypt    = require('bcrypt');
 const usersData = require('../data/users.data');
 
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 12;
 
 // Return a user's own account (no password_hash — the data layer strips it).
 async function getUserById(userId, requesterId) {
@@ -46,7 +46,7 @@ async function updateUser(userId, requesterId, { email, password }) {
 
   if (email !== undefined) {
     // Basic structural check — a real app would use a proper email library.
-    if (typeof email !== 'string' || !email.trim() || !email.includes('@')) {
+    if (typeof email !== 'string' || !email.trim() || !email.includes('@') || !email.includes('.')) {
       const err = new Error('A valid email address is required');
       err.status = 400;
       throw err;
@@ -55,8 +55,8 @@ async function updateUser(userId, requesterId, { email, password }) {
   }
 
   if (password !== undefined) {
-    if (typeof password !== 'string' || password.length < 6) {
-      const err = new Error('Password must be at least 6 characters');
+    if (typeof password !== 'string' || password.length < 8) {
+      const err = new Error('Password must be at least 8 characters');
       err.status = 400;
       throw err;
     }
