@@ -6,6 +6,8 @@
 
 const ordersData = require('../data/orders.data');
 
+const VALID_STATUSES = ['pending', 'paid', 'shipped', 'cancelled'];
+
 // Return all orders for the current user.
 // Filtering by user_id in the query means a user can never see another's orders.
 async function getAllOrders(userId) {
@@ -38,6 +40,12 @@ async function getOrderById(orderId, userId) {
 async function updateOrderStatus(orderId, userId, status) {
   if (!status || typeof status !== 'string' || !status.trim()) {
     const err = new Error('status is required');
+    err.status = 400;
+    throw err;
+  }
+
+  if (!VALID_STATUSES.includes(status.trim())) {
+    const err = new Error(`Invalid status. Allowed values: ${VALID_STATUSES.join(', ')}`);
     err.status = 400;
     throw err;
   }
