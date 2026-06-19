@@ -3,20 +3,22 @@
 // Mounted at /api/products in app.js, so a route defined as '/:id'
 // here is reachable at /api/products/:id.
 //
-// Auth design (from API_PLAN.md):
+// Auth design:
 //   Reading products is public — a storefront should be browsable without an account.
-//   Creating, updating, and deleting are write operations that require a login.
+//   Creating, updating, and deleting require an admin account (is_admin = true).
+//   Admins are promoted directly in the database; there is no API endpoint for this.
 //
 // Endpoints:
 //   GET    /api/products      — list all products (public)
 //   GET    /api/products/:id  — get one product (public)
-//   POST   /api/products      — create a product (auth required)
-//   PUT    /api/products/:id  — update a product (auth required)
-//   DELETE /api/products/:id  — delete a product (auth required)
+//   POST   /api/products      — create a product (admin required)
+//   PUT    /api/products/:id  — update a product (admin required)
+//   DELETE /api/products/:id  — delete a product (admin required)
 
 const { Router } = require('express');
-const isAuthenticated      = require('../middleware/isAuthenticated');
-const productsController   = require('../controllers/products.controller');
+const isAuthenticated    = require('../middleware/isAuthenticated');
+const isAdmin            = require('../middleware/isAdmin');
+const productsController = require('../controllers/products.controller');
 
 const router = Router();
 
@@ -75,7 +77,7 @@ router.get('/:id', productsController.getProductById);
  * @swagger
  * /products:
  *   post:
- *     summary: Create a new product
+ *     summary: Create a new product (admin required)
  *     tags: [Products]
  *     security:
  *       - cookieAuth: []
@@ -115,13 +117,15 @@ router.get('/:id', productsController.getProductById);
  *         $ref: '#/components/responses/BadRequest'
  *       401:
  *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
  */
 
 /**
  * @swagger
  * /products/{id}:
  *   put:
- *     summary: Update a product (any subset of fields)
+ *     summary: Update a product — any subset of fields (admin required)
  *     tags: [Products]
  *     security:
  *       - cookieAuth: []
@@ -165,6 +169,8 @@ router.get('/:id', productsController.getProductById);
  *         $ref: '#/components/responses/BadRequest'
  *       401:
  *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
  *       404:
  *         $ref: '#/components/responses/NotFound'
  */
@@ -173,7 +179,7 @@ router.get('/:id', productsController.getProductById);
  * @swagger
  * /products/{id}:
  *   delete:
- *     summary: Delete a product
+ *     summary: Delete a product (admin required)
  *     tags: [Products]
  *     security:
  *       - cookieAuth: []
@@ -189,14 +195,16 @@ router.get('/:id', productsController.getProductById);
  *         description: Product deleted
  *       401:
  *         $ref: '#/components/responses/Unauthorized'
+ *       403:
+ *         $ref: '#/components/responses/Forbidden'
  *       404:
  *         $ref: '#/components/responses/NotFound'
  */
 
-// Protected routes — isAuthenticated runs first.
-// If the user is not logged in, the middleware responds with 401 and the controller never runs.
-router.post('/',    isAuthenticated, productsController.createProduct);
-router.put('/:id',  isAuthenticated, productsController.updateProduct);
-router.delete('/:id', isAuthenticated, productsController.deleteProduct);
+// Admin-only routes — isAuthenticated runs first (401 if not logged in),
+// then isAdmin (403 if logged in but not an admin).
+router.post('/',      isAuthenticated, isAdmin, productsController.createProduct);
+router.put('/:id',    isAuthenticated, isAdmin, productsController.updateProduct);
+router.delete('/:id', isAuthenticated, isAdmin, productsController.deleteProduct);
 
 module.exports = router;
