@@ -1,4 +1,4 @@
-// users.service.js — Business logic for user account endpoints.
+﻿// users.service.js — Business logic for user account endpoints.
 //
 // Responsibilities:
 //   1. Ownership enforcement — a user may only read or modify their own account.
@@ -17,7 +17,14 @@ const SALT_ROUNDS = 12;
 
 // Return a user's own account (no password_hash — the data layer strips it).
 async function getUserById(userId, requesterId) {
-  if (requesterId !== parseInt(userId, 10)) {
+  const numericId = parseInt(userId, 10);
+  if (isNaN(numericId)) {
+    const err = new Error(`User with id ${userId} not found`);
+    err.status = 404;
+    throw err;
+  }
+
+  if (requesterId !== numericId) {
     const err = new Error('You do not have permission to view this account');
     err.status = 403;
     throw err;
@@ -36,7 +43,14 @@ async function getUserById(userId, requesterId) {
 // Update a user's email, password, or both.
 // Only fields present in the call are changed — omitted fields are left untouched.
 async function updateUser(userId, requesterId, { email, password }) {
-  if (requesterId !== parseInt(userId, 10)) {
+  const numericId = parseInt(userId, 10);
+  if (isNaN(numericId)) {
+    const err = new Error(`User with id ${userId} not found`);
+    err.status = 404;
+    throw err;
+  }
+
+  if (requesterId !== numericId) {
     const err = new Error('You do not have permission to update this account');
     err.status = 403;
     throw err;
@@ -95,7 +109,14 @@ async function updateUser(userId, requesterId, { email, password }) {
 // Delete the user's account.
 // ON DELETE CASCADE handles the user's cart and orders at the DB level.
 async function deleteUser(userId, requesterId) {
-  if (requesterId !== parseInt(userId, 10)) {
+  const numericId = parseInt(userId, 10);
+  if (isNaN(numericId)) {
+    const err = new Error(`User with id ${userId} not found`);
+    err.status = 404;
+    throw err;
+  }
+
+  if (requesterId !== numericId) {
     const err = new Error('You do not have permission to delete this account');
     err.status = 403;
     throw err;

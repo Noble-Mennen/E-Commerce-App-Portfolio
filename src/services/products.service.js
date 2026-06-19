@@ -1,4 +1,4 @@
-// products.service.js — Business logic for products.
+﻿// products.service.js — Business logic for products.
 //
 // This layer sits between the controller (HTTP) and the data layer (SQL).
 // It owns two responsibilities:
@@ -48,7 +48,7 @@ async function createProduct({ name, description, price, stock }) {
 
   // Accept price as a string (JSON numbers come in as numbers, but be safe).
   const parsedPrice = Number(price);
-  if (price === undefined || price === null || isNaN(parsedPrice)) {
+  if (price === undefined || price === null || String(price).trim() === '' || isNaN(parsedPrice)) {
     const err = new Error('Product price is required and must be a number');
     err.status = 400;
     throw err;
@@ -100,7 +100,7 @@ async function updateProduct(id, { name, description, price, stock }) {
 
   if (price !== undefined) {
     const parsedPrice = Number(price);
-    if (isNaN(parsedPrice) || parsedPrice < 0) {
+    if (String(price).trim() === '' || isNaN(parsedPrice) || parsedPrice < 0) {
       const err = new Error('Product price must be a non-negative number');
       err.status = 400;
       throw err;
