@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #131921;
+  background-color: var(--color-header);
   color: #fff;
 }
 
@@ -108,5 +108,20 @@
 }
 
 .authBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.themeBtn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.themeBtn:hover {
   background: rgba(255, 255, 255, 0.1);
 }

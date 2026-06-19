@@ -17,8 +17,8 @@
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 1.25rem 1.5rem;
 }
@@ -27,7 +27,7 @@
   font-size: 1rem;
   font-weight: 700;
   margin: 0 0 1rem;
-  color: #0f1111;
+  color: var(--color-text);
 }
 
 .dl {
@@ -39,13 +39,13 @@
 }
 
 .dl dt {
-  color: #555;
+  color: var(--color-text-secondary);
   font-weight: 600;
   padding: 0.2rem 0;
 }
 
 .dl dd {
-  color: #0f1111;
+  color: var(--color-text);
   margin: 0;
   padding: 0.2rem 0;
 }
@@ -66,27 +66,27 @@
 
 .input {
   padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border-input);
   border-radius: 4px;
   font-size: 0.9rem;
   outline: none;
 }
 
 .input:focus {
-  border-color: #ff9900;
+  border-color: var(--color-accent);
   box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
 }
 
 .hint {
   font-size: 0.75rem;
   font-weight: 400;
-  color: #777;
+  color: var(--color-text-muted);
 }
 
 .saveBtn {
   align-self: flex-start;
-  background: #ff9900;
-  color: #131921;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
   border: none;
   border-radius: 4px;
   padding: 0.5rem 1.2rem;
@@ -97,29 +97,29 @@
 }
 
 .saveBtn:hover:not(:disabled) {
-  background: #e88c00;
+  background: var(--color-accent-hover);
 }
 
 .saveBtn:disabled {
-  background: #ccc;
+  background: var(--color-disabled-bg);
   cursor: not-allowed;
 }
 
 .dangerTitle {
   font-size: 1rem;
   font-weight: 700;
-  color: #cc0c39;
+  color: var(--color-error);
   margin: 0 0 0.75rem;
 }
 
 .dangerText {
   font-size: 0.85rem;
-  color: #555;
+  color: var(--color-text-secondary);
   margin: 0 0 1rem;
 }
 
 .deleteBtn {
-  background: #cc0c39;
+  background: var(--color-error);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -131,17 +131,17 @@
 }
 
 .deleteBtn:hover:not(:disabled) {
-  background: #a50930;
+  filter: brightness(0.88);
 }
 
 .deleteBtn:disabled {
-  background: #ccc;
+  background: var(--color-disabled-bg);
   cursor: not-allowed;
 }
 
 .success {
-  color: #155724;
-  background: #d4edda;
+  color: var(--color-success-text);
+  background: var(--color-success-bg);
   border-radius: 4px;
   padding: 0.5rem 0.75rem;
   font-size: 0.85rem;
@@ -149,8 +149,8 @@
 }
 
 .error {
-  color: #721c24;
-  background: #f8d7da;
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
   border-radius: 4px;
   padding: 0.5rem 0.75rem;
   font-size: 0.85rem;

@@ -6,11 +6,109 @@
   padding: 0;
 }
 
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --color-bg: #f0f2f2;
+  --color-surface: #ffffff;
+  --color-header: #131921;
+  --color-placeholder: #f0f2f2;
+  --color-input-bg: #ffffff;
+
+  /* Text */
+  --color-text: #0f1111;
+  --color-text-secondary: #555555;
+  --color-text-muted: #777777;
+  --color-text-faint: #888888;
+
+  /* Borders */
+  --color-border: #dddddd;
+  --color-border-input: #cccccc;
+  --color-border-divider: #f0f2f2;
+
+  /* Disabled state */
+  --color-disabled-bg: #cccccc;
+  --color-disabled-text: #666666;
+
+  /* Brand accent */
+  --color-accent: #ff9900;
+  --color-accent-hover: #e88c00;
+  --color-accent-text: #131921;
+
+  /* Links */
+  --color-link: #0066c0;
+  --color-link-hover: #c45500;
+
+  /* Semantic */
+  --color-success: #007600;
+  --color-success-bg: #d4edda;
+  --color-success-text: #155724;
+  --color-error: #cc0c39;
+  --color-error-bg: #f8d7da;
+  --color-error-text: #721c24;
+
+  /* Order status badges */
+  --color-badge-pending-bg: #fff3cd;
+  --color-badge-pending-text: #856404;
+  --color-badge-paid-bg: #d4edda;
+  --color-badge-paid-text: #155724;
+  --color-badge-shipped-bg: #cce5ff;
+  --color-badge-shipped-text: #004085;
+  --color-badge-cancelled-bg: #f8d7da;
+  --color-badge-cancelled-text: #721c24;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #121212;
+  --color-surface: #1e1e2e;
+  --color-header: #0d1117;
+  --color-placeholder: #2a2a3a;
+  --color-input-bg: #2a2a3a;
+
+  --color-text: #e8e8e8;
+  --color-text-secondary: #aaaaaa;
+  --color-text-muted: #888888;
+  --color-text-faint: #666666;
+
+  --color-border: #3a3a4a;
+  --color-border-input: #555555;
+  --color-border-divider: #2a2a3a;
+
+  --color-disabled-bg: #3a3a4a;
+  --color-disabled-text: #888888;
+
+  --color-accent: #ff9900;
+  --color-accent-hover: #e88c00;
+  --color-accent-text: #131921;
+
+  --color-link: #4a9eff;
+  --color-link-hover: #ff9900;
+
+  --color-success: #4caf50;
+  --color-success-bg: #1a3320;
+  --color-success-text: #4caf50;
+  --color-error: #f44336;
+  --color-error-bg: #3a1515;
+  --color-error-text: #f44336;
+
+  --color-badge-pending-bg: #3a2a00;
+  --color-badge-pending-text: #ffc107;
+  --color-badge-paid-bg: #0a2a0f;
+  --color-badge-paid-text: #4caf50;
+  --color-badge-shipped-bg: #001a3a;
+  --color-badge-shipped-text: #4a9eff;
+  --color-badge-cancelled-bg: #2a0a0a;
+  --color-badge-cancelled-text: #f44336;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;
-  background-color: #f0f2f2;
-  color: #0f1111;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -27,4 +125,6 @@ button {
 input,
 textarea {
   font-family: inherit;
+  background-color: var(--color-input-bg);
+  color: var(--color-text);
 }

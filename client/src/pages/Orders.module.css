@@ -20,8 +20,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 1rem 1.25rem;
   text-decoration: none;
@@ -42,12 +42,12 @@
 .orderId {
   font-weight: 600;
   font-size: 0.95rem;
-  color: #0f1111;
+  color: var(--color-text);
 }
 
 .orderDate {
   font-size: 0.8rem;
-  color: #777;
+  color: var(--color-text-muted);
 }
 
 .orderRight {
@@ -67,8 +67,8 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #fff3cd;
-  color: #856404;
+  background: var(--color-badge-pending-bg);
+  color: var(--color-badge-pending-text);
 }
 
 .statusPaid {
@@ -76,8 +76,8 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #d4edda;
-  color: #155724;
+  background: var(--color-badge-paid-bg);
+  color: var(--color-badge-paid-text);
 }
 
 .statusShipped {
@@ -85,8 +85,8 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #cce5ff;
-  color: #004085;
+  background: var(--color-badge-shipped-bg);
+  color: var(--color-badge-shipped-text);
 }
 
 .statusCancelled {
@@ -94,17 +94,17 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #f8d7da;
-  color: #721c24;
+  background: var(--color-badge-cancelled-bg);
+  color: var(--color-badge-cancelled-text);
 }
 
 .empty {
-  color: #555;
+  color: var(--color-text-secondary);
   margin-bottom: 1rem;
 }
 
 .shopLink {
-  color: #0066c0;
+  color: var(--color-link);
   text-decoration: none;
 }
 
@@ -114,10 +114,10 @@
 
 .status {
   padding: 2rem;
-  color: #555;
+  color: var(--color-text-secondary);
 }
 
 .error {
   padding: 2rem;
-  color: #cc0c39;
+  color: var(--color-error);
 }

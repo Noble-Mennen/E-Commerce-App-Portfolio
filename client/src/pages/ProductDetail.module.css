@@ -7,7 +7,7 @@
 .back {
   display: inline-block;
   margin-bottom: 1.25rem;
-  color: #0066c0;
+  color: var(--color-link);
   text-decoration: none;
   font-size: 0.9rem;
 }
@@ -32,7 +32,7 @@
 .imagePlaceholder {
   width: 100%;
   aspect-ratio: 1;
-  background: #f0f2f2;
+  background: var(--color-placeholder);
   border-radius: 6px;
 }
 
@@ -41,7 +41,7 @@
   aspect-ratio: 1;
   object-fit: contain;
   border-radius: 6px;
-  background: #f0f2f2;
+  background: var(--color-placeholder);
 }
 
 .info {
@@ -53,31 +53,31 @@
 .name {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0f1111;
+  color: var(--color-text);
   margin: 0;
 }
 
 .price {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #0f1111;
+  color: var(--color-text);
   margin: 0;
 }
 
 .inStock {
   font-size: 0.9rem;
-  color: #007600;
+  color: var(--color-success);
   font-weight: 500;
 }
 
 .outOfStock {
   font-size: 0.9rem;
-  color: #cc0c39;
+  color: var(--color-error);
   font-weight: 500;
 }
 
 .description {
-  color: #444;
+  color: var(--color-text-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
@@ -100,7 +100,7 @@
 .qtyInput {
   width: 60px;
   padding: 0.3rem 0.4rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border-input);
   border-radius: 4px;
   font-size: 0.9rem;
   text-align: center;
@@ -108,8 +108,8 @@
 
 .addBtn {
   display: inline-block;
-  background: #ff9900;
-  color: #131921;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
   border: none;
   border-radius: 4px;
   padding: 0.7rem 1.5rem;
@@ -123,29 +123,29 @@
 }
 
 .addBtn:hover:not(:disabled) {
-  background: #e88c00;
+  background: var(--color-accent-hover);
 }
 
 .addBtn:disabled {
-  background: #ccc;
-  color: #666;
+  background: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
   cursor: not-allowed;
 }
 
 .success {
-  color: #007600;
+  color: var(--color-success);
   font-size: 0.9rem;
   margin: 0;
 }
 
 .error {
-  color: #cc0c39;
+  color: var(--color-error);
   font-size: 0.9rem;
   margin: 0;
 }
 
 .status {
   padding: 2rem;
-  color: #555;
+  color: var(--color-text-secondary);
   text-align: center;
 }

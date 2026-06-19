@@ -7,7 +7,7 @@
 .back {
   display: inline-block;
   margin-bottom: 1.25rem;
-  color: #0066c0;
+  color: var(--color-link);
   text-decoration: none;
   font-size: 0.9rem;
 }
@@ -33,7 +33,7 @@
 
 .date {
   font-size: 0.85rem;
-  color: #777;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -55,8 +55,8 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #fff3cd;
-  color: #856404;
+  background: var(--color-badge-pending-bg);
+  color: var(--color-badge-pending-text);
 }
 
 .statusPaid {
@@ -64,8 +64,8 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #d4edda;
-  color: #155724;
+  background: var(--color-badge-paid-bg);
+  color: var(--color-badge-paid-text);
 }
 
 .statusShipped {
@@ -73,8 +73,8 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #cce5ff;
-  color: #004085;
+  background: var(--color-badge-shipped-bg);
+  color: var(--color-badge-shipped-text);
 }
 
 .statusCancelled {
@@ -82,13 +82,13 @@
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 12px;
-  background: #f8d7da;
-  color: #721c24;
+  background: var(--color-badge-cancelled-bg);
+  color: var(--color-badge-cancelled-text);
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 1.25rem;
 }
@@ -109,18 +109,18 @@
 .table td {
   text-align: left;
   padding: 0.5rem 0.4rem;
-  border-bottom: 1px solid #f0f2f2;
+  border-bottom: 1px solid var(--color-border-divider);
 }
 
 .table th {
   font-weight: 600;
-  color: #555;
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   text-transform: uppercase;
 }
 
 .table tfoot tr {
-  border-top: 2px solid #ddd;
+  border-top: 2px solid var(--color-border);
 }
 
 .totalLabel {
@@ -136,10 +136,10 @@
 
 .status {
   padding: 2rem;
-  color: #555;
+  color: var(--color-text-secondary);
 }
 
 .error {
   padding: 2rem;
-  color: #cc0c39;
+  color: var(--color-error);
 }
