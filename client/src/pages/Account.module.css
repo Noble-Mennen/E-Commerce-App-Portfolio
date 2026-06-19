@@ -1,0 +1,158 @@
+.page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.heading {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: #0f1111;
+}
+
+.dl {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 0.4rem 0;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.dl dt {
+  color: #555;
+  font-weight: 600;
+  padding: 0.2rem 0;
+}
+
+.dl dd {
+  color: #0f1111;
+  margin: 0;
+  padding: 0.2rem 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #ff9900;
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+.hint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #777;
+}
+
+.saveBtn {
+  align-self: flex-start;
+  background: #ff9900;
+  color: #131921;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: #e88c00;
+}
+
+.saveBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.dangerTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #cc0c39;
+  margin: 0 0 0.75rem;
+}
+
+.dangerText {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0 0 1rem;
+}
+
+.deleteBtn {
+  background: #cc0c39;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.deleteBtn:hover:not(:disabled) {
+  background: #a50930;
+}
+
+.deleteBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.success {
+  color: #155724;
+  background: #d4edda;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.error {
+  color: #721c24;
+  background: #f8d7da;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}

@@ -1,2 +1,6 @@
 node_modules/
 .env
+
+# Frontend build output and dependencies
+client/node_modules/
+client/dist/
