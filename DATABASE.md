@@ -30,6 +30,7 @@ Cart items reference live products, so the cart always reflects current prices a
 | username | VARCHAR UNIQUE NOT NULL | login identifier |
 | email | VARCHAR UNIQUE NOT NULL | |
 | password_hash | VARCHAR NOT NULL | bcrypt hash, never plain text |
+| is_admin | BOOLEAN NOT NULL DEFAULT FALSE | grants product write access; set directly in DB |
 | created_at | TIMESTAMPTZ DEFAULT now() | |
 
 ### products

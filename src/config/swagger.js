@@ -38,6 +38,7 @@ const options = {
             id:         { type: 'integer', example: 1 },
             username:   { type: 'string',  example: 'johndoe' },
             email:      { type: 'string',  format: 'email', example: 'john@example.com' },
+            is_admin:   { type: 'boolean', example: false },
             created_at: { type: 'string',  format: 'date-time' },
           },
         },
@@ -155,7 +156,7 @@ const options = {
           },
         },
         Forbidden: {
-          description: 'Access denied — logged in but not the owner of this resource',
+          description: 'Access denied — logged in but not authorised (not the owner or not an admin)',
           content: {
             'application/json': {
               schema: { $ref: '#/components/schemas/Error' },

@@ -14,7 +14,7 @@ const pool = require('../db/pool');
 // Returns the user row, or undefined if no user with that ID exists.
 async function getUserById(id) {
   const result = await pool.query(
-    'SELECT id, username, email, created_at FROM users WHERE id = $1',
+    'SELECT id, username, email, is_admin, created_at FROM users WHERE id = $1',
     [id]
   );
   return result.rows[0];
