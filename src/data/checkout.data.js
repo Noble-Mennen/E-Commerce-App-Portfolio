@@ -35,7 +35,8 @@ async function getCartItems(cartId, client) {
      FROM cart_items ci
      JOIN products p ON p.id = ci.product_id
      WHERE ci.cart_id = $1
-     ORDER BY ci.id ASC`,
+     ORDER BY ci.id ASC
+     FOR UPDATE OF p`,
     [cartId]
   );
   return result.rows;
