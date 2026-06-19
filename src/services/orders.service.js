@@ -66,6 +66,13 @@ async function updateOrderStatus(orderId, userId, status) {
   }
 
   const updated = await ordersData.updateOrderStatus(orderId, status.trim());
+
+  if (!updated) {
+    const err = new Error(`Order with id ${orderId} not found`);
+    err.status = 404;
+    throw err;
+  }
+
   return updated;
 }
 
