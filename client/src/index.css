@@ -48,6 +48,10 @@
   --color-error-bg: #f8d7da;
   --color-error-text: #721c24;
 
+  /* Header-specific — always dark background, so these don't flip */
+  --color-header-text:       #ffffff;
+  --color-header-text-muted: #dddddd;
+
   /* Order status badges */
   --color-badge-pending-bg: #fff3cd;
   --color-badge-pending-text: #856404;
@@ -93,6 +97,10 @@
   --color-error: #f44336;
   --color-error-bg: #3a1515;
   --color-error-text: #f44336;
+
+  /* Header-specific — always dark background, so these don't flip */
+  --color-header-text:       #ffffff;
+  --color-header-text-muted: #dddddd;
 
   --color-badge-pending-bg: #3a2a00;
   --color-badge-pending-text: #ffc107;

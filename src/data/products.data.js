@@ -52,7 +52,7 @@ async function createProduct({ name, description, price, stock, image_url }) {
 // fields present in the `fields` object.
 //
 // Example: if fields = { price: 9.99 }, the query becomes:
-//   UPDATE products SET price = $1, updated_at = now() WHERE id = $2 RETURNING *
+//   UPDATE products SET price = $1 WHERE id = $2 RETURNING *
 //
 // Returns the updated product row, or undefined if no product with that ID exists.
 async function updateProduct(id, fields) {

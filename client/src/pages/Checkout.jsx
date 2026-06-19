@@ -15,11 +15,12 @@ export default function Checkout() {
   const total = items.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
 
   // Redirect to cart if it's empty (nothing to check out).
+  // cart starts null until the fetch settles; guard against redirecting before data arrives.
   useEffect(() => {
-    if (!cartLoading && items.length === 0) {
+    if (!cartLoading && cart !== null && items.length === 0) {
       navigate('/cart', { replace: true });
     }
-  }, [cartLoading, items.length, navigate]);
+  }, [cartLoading, cart, items.length, navigate]);
 
   async function handlePlaceOrder() {
     setError(null);

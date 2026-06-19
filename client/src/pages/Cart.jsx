@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 import styles from './Cart.module.css';
@@ -58,14 +59,15 @@ export default function Cart() {
 }
 
 function CartItem({ item, onUpdate, onRemove }) {
-  async function handleQtyChange(e) {
+  const debounceRef = useRef(null);
+
+  function handleQtyChange(e) {
     const qty = Number(e.target.value);
     if (qty >= 1) {
-      try {
-        await onUpdate(item.product_id, qty);
-      } catch {
-        // Ignore; CartContext will stay consistent with the last known server state.
-      }
+      clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        onUpdate(item.product_id, qty).catch(() => {});
+      }, 400);
     }
   }
 
