@@ -26,7 +26,13 @@ async function getCart(userId) {
 // doesn't exist, giving us the same guarantee as an explicit SELECT but with
 // one fewer query. We translate it into a clean 404 here.
 async function addItem(userId, productId, quantity) {
-  if (!Number.isInteger(quantity) || quantity < 1) {
+  if (productId === undefined || productId === null) {
+    const err = new Error('productId is required');
+    err.status = 400;
+    throw err;
+  }
+
+  if (!Number.isInteger(Number(quantity)) || quantity < 1) {
     const err = new Error('Quantity must be a positive integer');
     err.status = 400;
     throw err;
@@ -58,7 +64,7 @@ async function addItem(userId, productId, quantity) {
 // Set the quantity of an existing cart item.
 // The item must already be in the cart — this endpoint does not add new items.
 async function updateItemQuantity(userId, productId, quantity) {
-  if (!Number.isInteger(quantity) || quantity < 1) {
+  if (!Number.isInteger(Number(quantity)) || quantity < 1) {
     const err = new Error('Quantity must be a positive integer');
     err.status = 400;
     throw err;
