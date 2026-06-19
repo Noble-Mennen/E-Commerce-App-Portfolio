@@ -16,7 +16,7 @@ async function checkout(userId) {
   try {
     await client.query('BEGIN');
 
-    // Step 1: Load the user's cart and its items.
+    // Load the user's cart and its items.
     const cart = await checkoutData.getCartByUserId(userId, client);
     if (!cart) {
       const err = new Error('Cart not found for this user');
@@ -31,7 +31,7 @@ async function checkout(userId) {
       throw err;
     }
 
-    // Step 2: Validate stock for every item before touching the orders table.
+    // Validate stock for every item before touching the orders table.
     // Checking inside the transaction means the stock values we read are part
     // of the same snapshot, protecting against concurrent depletions.
     for (const item of items) {
@@ -45,7 +45,7 @@ async function checkout(userId) {
       }
     }
 
-    // Step 3: Compute the total and create the order row.
+    // Compute the total and create the order row.
     // price comes back from Postgres as a string (NUMERIC avoids JS float issues),
     // so we parse it before multiplying. We round to 2 decimal places to match
     // the NUMERIC(10,2) column and avoid accumulated floating-point drift.
@@ -57,7 +57,9 @@ async function checkout(userId) {
 
     const order = await checkoutData.createOrder(userId, total, client);
 
-    // Step 4: Copy each cart item into order_items, snapshotting name and price.
+    // Copy each cart item into order_items and decrement stock.
+    // Both writes use the same transaction client so a failure on any item
+    // rolls back all inserts and all stock changes together.
     const orderItems = [];
     for (const item of items) {
       const orderItem = await checkoutData.insertOrderItem(order.id, {
@@ -67,17 +69,18 @@ async function checkout(userId) {
         quantity:     item.quantity,
       }, client);
       orderItems.push(orderItem);
+      await checkoutData.decrementStock(item.product_id, item.quantity, client);
     }
 
-    // Step 5: Assume the charge succeeds — advance status to 'paid'.
+    // Assume the charge succeeds — advance status to 'paid'.
     const paidOrder = await checkoutData.updateOrderStatus(order.id, 'paid', client);
 
-    // Step 6: Clear the cart so it is ready for the next session.
+    // Clear the cart so it is ready for the next session.
     await checkoutData.clearCartItems(cart.id, client);
 
     await client.query('COMMIT');
 
-    // Step 7: Return the completed order with its items.
+    // Return the completed order with its items.
     // We build this from in-memory data rather than issuing another SELECT —
     // every piece was returned by the INSERT calls above.
     return { ...paidOrder, items: orderItems };

@@ -76,6 +76,19 @@ async function updateOrderStatus(orderId, status, client) {
   return result.rows[0];
 }
 
+// Decrement a product's stock by the purchased quantity within the active transaction.
+//
+// Running inside the transaction means a ROLLBACK (on any later failure) undoes
+// both the order_items insert and this stock change atomically — no orphaned stock
+// decrements for orders that never committed.
+async function decrementStock(productId, quantity, client) {
+  const result = await client.query(
+    'UPDATE products SET stock = stock - $1 WHERE id = $2 RETURNING id, stock',
+    [quantity, productId]
+  );
+  return result.rows[0];
+}
+
 // Remove all items from the cart after a successful checkout.
 async function clearCartItems(cartId, client) {
   await client.query(
@@ -89,6 +102,7 @@ module.exports = {
   getCartItems,
   createOrder,
   insertOrderItem,
+  decrementStock,
   updateOrderStatus,
   clearCartItems,
 };
