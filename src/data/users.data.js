@@ -1,4 +1,4 @@
-// users.data.js — Data access layer for the users table.
+﻿// users.data.js — Data access layer for the users table.
 //
 // Rules of this layer:
 //   - No business logic, no validation, no HTTP concepts
@@ -31,7 +31,12 @@ async function getUserById(id) {
 //
 // Returns undefined if no user with that ID exists.
 async function updateUser(id, fields) {
+  const ALLOWED_COLUMNS = ['email', 'password_hash'];
   const keys   = Object.keys(fields);
+
+  const invalid = keys.find(k => !ALLOWED_COLUMNS.includes(k));
+  if (invalid) throw new Error(`updateUser: disallowed column "${invalid}"`);
+
   const values = Object.values(fields);
 
   const setClauses = keys.map((key, i) => `${key} = $${i + 1}`).join(', ');

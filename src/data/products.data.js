@@ -1,4 +1,4 @@
-// products.data.js — Data access layer for products.
+﻿// products.data.js — Data access layer for products.
 //
 // This file is the only place in the app that runs SQL against the products table.
 // Every function accepts the values it needs, runs one query, and returns the result.
@@ -56,8 +56,13 @@ async function createProduct({ name, description, price, stock }) {
 //
 // Returns the updated product row, or undefined if no product with that ID exists.
 async function updateProduct(id, fields) {
+  const ALLOWED_COLUMNS = ['name', 'description', 'price', 'stock'];
   // Build an array of "column = $n" fragments and a matching array of values.
   const keys   = Object.keys(fields);
+
+  const invalid = keys.find(k => !ALLOWED_COLUMNS.includes(k));
+  if (invalid) throw new Error(`updateProduct: disallowed column "${invalid}"`);
+
   const values = Object.values(fields);
 
   // $1, $2, ... for each field; the ID placeholder comes after all field placeholders.
