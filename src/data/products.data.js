@@ -33,12 +33,12 @@ async function getProductById(id) {
 // Insert a new product row and return it.
 // All four columns are required — validation is handled by the service layer before this runs.
 // RETURNING * gives us the full row including the auto-generated id and created_at.
-async function createProduct({ name, description, price, stock }) {
+async function createProduct({ name, description, price, stock, image_url }) {
   const result = await pool.query(
-    `INSERT INTO products (name, description, price, stock)
-     VALUES ($1, $2, $3, $4)
+    `INSERT INTO products (name, description, price, stock, image_url)
+     VALUES ($1, $2, $3, $4, $5)
      RETURNING *`,
-    [name, description ?? null, price, stock ?? 0]
+    [name, description ?? null, price, stock ?? 0, image_url ?? null]
   );
   return result.rows[0];
 }
@@ -56,7 +56,7 @@ async function createProduct({ name, description, price, stock }) {
 //
 // Returns the updated product row, or undefined if no product with that ID exists.
 async function updateProduct(id, fields) {
-  const ALLOWED_COLUMNS = ['name', 'description', 'price', 'stock'];
+  const ALLOWED_COLUMNS = ['name', 'description', 'price', 'stock', 'image_url'];
   // Build an array of "column = $n" fragments and a matching array of values.
   const keys   = Object.keys(fields);
 

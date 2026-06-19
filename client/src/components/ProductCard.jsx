@@ -21,7 +21,11 @@ export default function ProductCard({ product }) {
   return (
     <div className={styles.card}>
       <Link to={`/products/${product.id}`} className={styles.nameLink}>
-        <div className={styles.imagePlaceholder} />
+        {product.image_url ? (
+          <img src={product.image_url} alt={product.name} className={styles.productImage} />
+        ) : (
+          <div className={styles.imagePlaceholder} />
+        )}
         <h3 className={styles.name}>{product.name}</h3>
       </Link>
 

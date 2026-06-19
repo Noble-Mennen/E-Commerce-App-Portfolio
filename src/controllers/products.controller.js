@@ -38,8 +38,8 @@ async function getProductById(req, res, next) {
 // Protected by isAuthenticated in the route file — only logged-in users can create products.
 async function createProduct(req, res, next) {
   try {
-    const { name, description, price, stock } = req.body;
-    const product = await productsService.createProduct({ name, description, price, stock });
+    const { name, description, price, stock, image_url } = req.body;
+    const product = await productsService.createProduct({ name, description, price, stock, image_url });
     res.status(201).json({ product });
   } catch (err) {
     next(err);
@@ -51,8 +51,8 @@ async function createProduct(req, res, next) {
 // Returns the full updated product row. The service throws 404 if the ID doesn't exist.
 async function updateProduct(req, res, next) {
   try {
-    const { name, description, price, stock } = req.body;
-    const product = await productsService.updateProduct(req.params.id, { name, description, price, stock });
+    const { name, description, price, stock, image_url } = req.body;
+    const product = await productsService.updateProduct(req.params.id, { name, description, price, stock, image_url });
     res.json({ product });
   } catch (err) {
     next(err);

@@ -49,6 +49,15 @@
   flex-shrink: 0;
 }
 
+.itemImage {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: #f0f2f2;
+}
+
 .itemInfo {
   display: flex;
   flex-direction: column;

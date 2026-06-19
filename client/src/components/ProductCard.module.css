@@ -26,6 +26,15 @@
   margin-bottom: 0.5rem;
 }
 
+.productImage {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  background: #f0f2f2;
+}
+
 .name {
   font-size: 0.95rem;
   font-weight: 600;

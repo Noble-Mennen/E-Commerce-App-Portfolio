@@ -55,7 +55,11 @@ export default function ProductDetail() {
       <Link to="/" className={styles.back}>← Back to products</Link>
 
       <div className={styles.layout}>
-        <div className={styles.imagePlaceholder} />
+        {product.image_url ? (
+          <img src={product.image_url} alt={product.name} className={styles.productImage} />
+        ) : (
+          <div className={styles.imagePlaceholder} />
+        )}
 
         <div className={styles.info}>
           <h1 className={styles.name}>{product.name}</h1>

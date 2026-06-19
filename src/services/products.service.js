@@ -38,7 +38,7 @@ async function getProductById(id) {
 // Price and stock must be non-negative numbers to match the CHECK constraints
 // in the database schema. Catching these here produces a clear 400 error
 // rather than a raw PostgreSQL constraint violation.
-async function createProduct({ name, description, price, stock }) {
+async function createProduct({ name, description, price, stock, image_url }) {
   // --- Validation ---
   if (!name || typeof name !== 'string' || !name.trim()) {
     const err = new Error('Product name is required');
@@ -72,6 +72,7 @@ async function createProduct({ name, description, price, stock }) {
     description: description?.trim() ?? null,
     price:       parsedPrice,
     stock:       parsedStock,
+    image_url:   image_url?.trim() ?? null,
   });
 }
 
@@ -80,7 +81,7 @@ async function createProduct({ name, description, price, stock }) {
 // Only the fields present in the request body are updated — undefined fields
 // are excluded so we never accidentally wipe out existing data.
 // Throws 400 for invalid values, 404 if the product doesn't exist.
-async function updateProduct(id, { name, description, price, stock }) {
+async function updateProduct(id, { name, description, price, stock, image_url }) {
   // Build an object containing only the fields the caller actually sent.
   const fields = {};
 
@@ -116,6 +117,10 @@ async function updateProduct(id, { name, description, price, stock }) {
       throw err;
     }
     fields.stock = parsedStock;
+  }
+
+  if (image_url !== undefined) {
+    fields.image_url = image_url?.trim() ?? null;
   }
 
   if (Object.keys(fields).length === 0) {

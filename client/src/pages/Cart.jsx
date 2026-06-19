@@ -79,7 +79,11 @@ function CartItem({ item, onUpdate, onRemove }) {
 
   return (
     <div className={styles.item}>
-      <div className={styles.itemImagePlaceholder} />
+      {item.image_url ? (
+        <img src={item.image_url} alt={item.product_name} className={styles.itemImage} />
+      ) : (
+        <div className={styles.itemImagePlaceholder} />
+      )}
       <div className={styles.itemInfo}>
         <Link to={`/products/${item.product_id}`} className={styles.itemName}>
           {item.product_name}

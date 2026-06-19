@@ -30,7 +30,8 @@ async function getCartItems(cartId) {
        ci.quantity,
        p.name  AS product_name,
        p.price,
-       p.stock
+       p.stock,
+       p.image_url
      FROM cart_items ci
      JOIN products p ON p.id = ci.product_id
      WHERE ci.cart_id = $1
