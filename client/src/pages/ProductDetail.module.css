@@ -1,0 +1,143 @@
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: #0066c0;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 600px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f0f2f2;
+  border-radius: 6px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f1111;
+  margin: 0;
+}
+
+.price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0f1111;
+  margin: 0;
+}
+
+.inStock {
+  font-size: 0.9rem;
+  color: #007600;
+  font-weight: 500;
+}
+
+.outOfStock {
+  font-size: 0.9rem;
+  color: #cc0c39;
+  font-weight: 500;
+}
+
+.description {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.buyBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.qtyLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.qtyInput {
+  width: 60px;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.addBtn {
+  display: inline-block;
+  background: #ff9900;
+  color: #131921;
+  border: none;
+  border-radius: 4px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.15s;
+  max-width: 220px;
+}
+
+.addBtn:hover:not(:disabled) {
+  background: #e88c00;
+}
+
+.addBtn:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.success {
+  color: #007600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.error {
+  color: #cc0c39;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.status {
+  padding: 2rem;
+  color: #555;
+  text-align: center;
+}

@@ -1,0 +1,85 @@
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.nameLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f0f2f2;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f1111;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.name:hover {
+  color: #c45500;
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f1111;
+  margin: 0;
+}
+
+.inStock {
+  font-size: 0.8rem;
+  color: #007600;
+  font-weight: 500;
+}
+
+.outOfStock {
+  font-size: 0.8rem;
+  color: #cc0c39;
+  font-weight: 500;
+}
+
+.addBtn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #ff9900;
+  color: #131921;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: auto;
+  transition: background 0.15s;
+}
+
+.addBtn:hover:not(:disabled) {
+  background: #e88c00;
+}
+
+.addBtn:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
