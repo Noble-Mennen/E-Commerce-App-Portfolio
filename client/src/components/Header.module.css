@@ -65,7 +65,7 @@
 }
 
 .cartLink:hover {
-  outline: 1px solid #fff;
+  outline: 1px solid var(--color-header-text);
 }
 
 .cartIcon {
@@ -96,7 +96,7 @@
 
 .authBtn {
   background: none;
-  border: 1px solid #fff;
+  border: 1px solid var(--color-header-text);
   color: var(--color-header-text);
   padding: 0.3rem 0.8rem;
   border-radius: 3px;

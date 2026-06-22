@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 import styles from './Cart.module.css';
@@ -60,6 +60,10 @@ export default function Cart() {
 
 function CartItem({ item, onUpdate, onRemove }) {
   const debounceRef = useRef(null);
+
+  useEffect(() => {
+    return () => clearTimeout(debounceRef.current);
+  }, []);
 
   function handleQtyChange(e) {
     const qty = Number(e.target.value);
