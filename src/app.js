@@ -1,4 +1,5 @@
 ﻿const express = require('express');
+const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const swaggerUi  = require('swagger-ui-express');
@@ -17,6 +18,14 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
+// Allow the frontend origin to send credentialed requests (session cookies).
+// CLIENT_ORIGIN is set in the Render dashboard for production; in local dev the
+// Vite proxy makes everything same-origin so CORS is not exercised at all.
+app.use(cors({
+  origin: process.env.CLIENT_ORIGIN,
+  credentials: true,
+}));
+
 app.use(express.json());
 
 app.use(session({
@@ -25,8 +34,11 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
+    // Cookies sent cross-origin (frontend on a different Render subdomain) require
+    // SameSite=None + Secure. Locally the Vite proxy makes requests same-origin so
+    // 'strict' is fine and avoids needing HTTPS in dev.
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
   },
 }));
 

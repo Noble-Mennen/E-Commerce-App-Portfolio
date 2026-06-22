@@ -6,7 +6,10 @@
 // envelope. Doing this in one place means the API modules stay thin and
 // components only ever see thrown Error objects with a plain .message string.
 
-const BASE = '/api';
+// In production VITE_API_URL is set to the Render backend URL (e.g.
+// https://shopport-api.onrender.com). Locally it is unset, so requests fall
+// through to /api which the Vite dev server proxies to localhost:3000.
+const BASE = import.meta.env.VITE_API_URL ?? '/api';
 
 async function apiFetch(path, options = {}) {
   const { body, ...rest } = options;
