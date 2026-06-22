@@ -156,8 +156,6 @@ Branch: `feat/frontend-improvements`
 
 **Still to do (Task 16):**
 - Admin UI (add/edit/delete products from the browser)
-- Toast/snackbar notifications for cart actions
-- Mobile layout improvements
 - Order cancellation button on Orders and OrderDetail pages
 - Better empty states and loading skeletons
 - Product category or price-range filter on the Home page
@@ -196,11 +194,11 @@ feat/checkout
 feat/orders-crud
 docs/swagger
 feat/frontend
-feat/frontend-improvements   ← active branch for Task 16 and beyond
+feat/frontend-improvements   ← merged to main
 feat/admin-role              ← merged to main
 fix/checkout-stock-lock      ← merged to main
-fix/checkout-deadlock        ← pending merge (ORDER BY p.id deadlock fix)
-fix/isAdmin-auth             ← pending merge (401/403 split in isAdmin.js)
+fix/checkout-deadlock        ← merged to main
+fix/isAdmin-auth             ← merged to main
 main
 ```
 
@@ -218,14 +216,4 @@ main
 
 ## First task for next session
 
-**Please run a code review of the three pending branches before any new work begins.**
-
-Three branches have uncommitted fixes that have not yet been merged to `main`:
-- `feat/frontend-improvements` — localStorage FOUC guard, Header.module.css token cleanup, Cart.jsx debounce teardown, Checkout.jsx redirect guard
-- `fix/checkout-deadlock` — `ORDER BY p.id` to prevent deadlocks under concurrent checkout
-- `fix/isAdmin-auth` — 401/403 split in `isAdmin.js`
-
-Compare each against `main` and verify:
-1. The change matches the explanation recorded in Task 16c above.
-2. No regressions introduced in files adjacent to each change.
-3. Anything that should be fixed before merging to main.
+All branches have been merged to `main`. Continue Task 16 by picking up the next item from the **Still to do (Task 16)** list above. Create a new branch off `main` for the work.
