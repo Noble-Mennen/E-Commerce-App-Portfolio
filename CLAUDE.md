@@ -154,8 +154,15 @@ Branch: `feat/frontend-improvements`
 - `src/data/auth.data.js`, `src/data/users.data.js` — `is_admin` included in user SELECT so `req.user.is_admin` is available on every authenticated request.
 - `src/data/products.data.js` — stale comment example corrected (no `updated_at = now()` in the dynamic SET builder).
 
+**16d — Admin UI**
+- `AdminRoute.jsx` — route guard that requires `user.is_admin`; unauthenticated→redirect to /login, non-admin→inline 403, admin→Outlet.
+- `AdminProducts.jsx` — `/admin/products` page with an inline create/edit form (two modes) and a product table with Edit/Delete per row. Delete uses `window.confirm`. All mutations refresh the product list from the server.
+- `AdminProducts.module.css` — CSS using `var(--color-*)` tokens; table layout with thumbnail, action buttons, form grid.
+- `client/src/api/products.js` — added `createProduct`, `updateProduct`, `deleteProduct`.
+- `App.jsx` — added `AdminRoute` wrapper with nested `/admin/products` route.
+- `Header.jsx` — "Admin" nav link shown only when `user.is_admin` is true.
+
 **Still to do (Task 16):**
-- Admin UI (add/edit/delete products from the browser)
 - Order cancellation button on Orders and OrderDetail pages
 - Better empty states and loading skeletons
 - Product category or price-range filter on the Home page
@@ -199,6 +206,7 @@ feat/admin-role              ← merged to main
 fix/checkout-stock-lock      ← merged to main
 fix/checkout-deadlock        ← merged to main
 fix/isAdmin-auth             ← merged to main
+feat/admin-ui                ← in progress
 main
 ```
 
@@ -216,4 +224,4 @@ main
 
 ## First task for next session
 
-All branches have been merged to `main`. Continue Task 16 by picking up the next item from the **Still to do (Task 16)** list above. Create a new branch off `main` for the work.
+Merge `feat/admin-ui` to `main`, then continue Task 16 by picking up the next item from the **Still to do (Task 16)** list above. Create a new branch off `main` for the work.

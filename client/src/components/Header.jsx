@@ -26,6 +26,11 @@ export default function Header() {
             <>
               <Link to="/orders" className={styles.navLink}>Orders</Link>
               <Link to="/account" className={styles.navLink}>Account</Link>
+              {/* Admin link, only rendered for users with is_admin = true
+                  so regular users never see a route they cannot access. */}
+              {user.is_admin && (
+                <Link to="/admin/products" className={styles.navLink}>Admin</Link>
+              )}
             </>
           )}
         </nav>

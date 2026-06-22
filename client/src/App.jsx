@@ -1,6 +1,11 @@
+// App.jsx: Root component. Renders the persistent Header and declares all
+// client-side routes. Routes are grouped by access level: public, protected
+// (any authenticated user), and admin-only.
+
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import AdminRoute from './components/AdminRoute.jsx';
 
 import Home from './pages/Home.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
@@ -11,6 +16,7 @@ import Checkout from './pages/Checkout.jsx';
 import Orders from './pages/Orders.jsx';
 import OrderDetail from './pages/OrderDetail.jsx';
 import Account from './pages/Account.jsx';
+import AdminProducts from './pages/AdminProducts.jsx';
 
 export default function App() {
   return (
@@ -31,6 +37,11 @@ export default function App() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetail />} />
           <Route path="/account" element={<Account />} />
+        </Route>
+
+        {/* Admin-only routes */}
+        <Route element={<AdminRoute />}>
+          <Route path="/admin/products" element={<AdminProducts />} />
         </Route>
       </Routes>
     </>

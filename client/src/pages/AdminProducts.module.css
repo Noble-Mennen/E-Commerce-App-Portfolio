@@ -1,0 +1,303 @@
+/* AdminProducts.module.css: Styles for the admin product management page.
+   All colour values use CSS custom properties defined in index.css so the
+   page automatically respects the active light / dark theme. */
+
+/* Page layout */
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Row that holds the page heading and the "Add Product" button side-by-side. */
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.heading {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Primary action button; accent colour to draw attention. */
+.addBtn {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.addBtn:hover {
+  background: var(--color-accent-hover);
+}
+
+/* Create / edit form card */
+
+/* Card container that wraps the form, matching the surface style used
+   on Account and other detail pages. */
+.formCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.formTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+/* Two-column grid for the form fields; full-width rows use formGridFull. */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem 1.25rem;
+}
+
+/* Lets a field (e.g. Description) span both columns. */
+.formGridFull {
+  grid-column: 1 / -1;
+}
+
+/* Stacks label text above its input. */
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.input,
+.textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: var(--color-input-bg);
+  color: var(--color-text);
+  outline: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Accent ring on focus, matches the focus style used on other form inputs. */
+.input:focus,
+.textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+/* Row that holds Save and Cancel buttons. */
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Primary save button; accent colour, disabled state uses neutral grey. */
+.saveBtn {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.saveBtn:disabled {
+  background: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+/* Secondary cancel button; ghost style so it doesn't compete with Save. */
+.cancelBtn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cancelBtn:hover {
+  background: var(--color-bg);
+}
+
+/* Inline error shown below the form fields when a save fails. */
+.formError {
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+/* Product table */
+
+/* Outer container; provides the border and rounds the corners around the table. */
+.tableWrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Full-width table with collapsed borders so .tableWrap handles the outer border. */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+/* Header row uses the page background colour to visually separate it from the body. */
+.thead {
+  background: var(--color-bg);
+}
+
+/* Column header; uppercase small text, consistent with other table headers in the app. */
+.th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.td {
+  padding: 0.75rem 1rem;
+  /* Divider colour is subtler than the main border so rows don't feel heavy. */
+  border-bottom: 1px solid var(--color-border-divider);
+  vertical-align: middle;
+}
+
+/* Remove the bottom border from the last row so it doesn't double up with .tableWrap. */
+.tr:last-child .td {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background: var(--color-bg);
+}
+
+/* Product image thumbnail; fixed size so all rows stay the same height. */
+.thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+
+/* Placeholder shown when a product has no image_url. Same size as the thumbnail. */
+.noThumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  background: var(--color-placeholder);
+  border: 1px solid var(--color-border);
+}
+
+.productName {
+  font-weight: 600;
+  color: var(--color-text);
+  max-width: 260px;
+}
+
+/* Prevents action buttons from wrapping onto a second line in narrow viewports. */
+.actionCell {
+  white-space: nowrap;
+}
+
+/* Edit button; ghost style with link colour so it reads as a secondary action. */
+.editBtn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-link);
+  cursor: pointer;
+  transition: background 0.12s;
+  margin-right: 0.4rem;
+}
+
+.editBtn:hover {
+  background: var(--color-bg);
+}
+
+/* Delete button; red outline makes the destructive nature obvious at a glance. */
+.deleteBtn {
+  background: none;
+  border: 1px solid var(--color-error);
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-error);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.deleteBtn:hover:not(:disabled) {
+  background: var(--color-error-bg);
+}
+
+.deleteBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Status lines */
+
+/* Centred text for loading and empty-state messages. */
+.status {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+/* Full-width error banner for load and delete failures. */
+.pageError {
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
