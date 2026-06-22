@@ -27,7 +27,7 @@ export default function Orders() {
   const [cancellingId, setCancellingId] = useState(null);
   const [cancelError, setCancelError] = useState(null);
 
-  // Fetch all orders on mount.
+  // Fetch all orders on mount; the list only changes on cancel (handled in local state).
   useEffect(() => {
     getOrders()
       .then(data => setOrders(data.orders))
@@ -55,14 +55,38 @@ export default function Orders() {
     }
   }
 
-  if (loading) return <p className={styles.status}>Loading orders…</p>;
-  if (error)   return <p className={styles.error}>{error}</p>;
+  // Show skeleton rows while the order fetch is in flight.
+  // Heading is rendered immediately so the page does not feel empty.
+  if (loading) {
+    return (
+      <main className={styles.page}>
+        <h1 className={styles.heading}>Your Orders</h1>
+        {/* 4 skeleton cards mirror the typical order card layout (id + date on left, total + badge on right). */}
+        <div className={styles.skeletonList}>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className={styles.skeletonCard}>
+              <div className={styles.skeletonMeta}>
+                <div className={`${styles.skeletonLine} ${styles.skeletonLineId}`} />
+                <div className={`${styles.skeletonLine} ${styles.skeletonLineDate}`} />
+              </div>
+              <div className={styles.skeletonRight}>
+                <div className={`${styles.skeletonLine} ${styles.skeletonLineTotal}`} />
+                <div className={`${styles.skeletonLine} ${styles.skeletonLineBadge}`} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    );
+  }
+
+  if (error) return <p className={styles.error}>{error}</p>;
 
   return (
     <main className={styles.page}>
       <h1 className={styles.heading}>Your Orders</h1>
 
-      {/* Error banner shown when a cancel request fails. */}
+      {/* Error banner shown when a cancel request fails — displayed above the list. */}
       {cancelError && <p className={styles.cancelError}>{cancelError}</p>}
 
       {/* Empty state with a call-to-action link, or the order list. */}
@@ -88,6 +112,7 @@ export default function Orders() {
                   <span className={styles.orderTotal}>
                     ${Number(order.total).toFixed(2)}
                   </span>
+                  {/* Badge class is resolved dynamically; falls back to pending style for unknown statuses. */}
                   <span className={styles[STATUS_CLASS[order.status] ?? 'statusPending']}>
                     {order.status}
                   </span>

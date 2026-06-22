@@ -112,6 +112,15 @@
   --color-badge-cancelled-text: #f44336;
 }
 
+/* Skeleton loading animation used across all pages.
+   Opacity pulse is theme-agnostic — works in both light and dark mode
+   without needing gradient colors that differ between themes.
+   Referenced by name from CSS Modules, so it must live here (global scope). */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 0.25; }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;

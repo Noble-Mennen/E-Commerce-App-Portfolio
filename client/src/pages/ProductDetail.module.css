@@ -1,3 +1,6 @@
+/* ProductDetail.module.css: Styles for the single-product detail page.
+   All colour values use CSS custom properties from index.css. */
+
 .page {
   max-width: 1000px;
   margin: 0 auto;
@@ -16,6 +19,8 @@
   text-decoration: underline;
 }
 
+/* Two-column grid: image on the left, product info on the right.
+   Collapses to a single column on narrow screens. */
 .layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -29,6 +34,7 @@
   }
 }
 
+/* Fallback shown when a product has no image_url. */
 .imagePlaceholder {
   width: 100%;
   aspect-ratio: 1;
@@ -36,6 +42,7 @@
   border-radius: 6px;
 }
 
+/* object-fit: contain keeps the full image visible without cropping. */
 .productImage {
   width: 100%;
   aspect-ratio: 1;
@@ -44,6 +51,7 @@
   background: var(--color-placeholder);
 }
 
+/* Right column: stacks name, price, stock, description, and buy box. */
 .info {
   display: flex;
   flex-direction: column;
@@ -83,6 +91,7 @@
   margin: 0;
 }
 
+/* Buy box: quantity input + add button + feedback messages. */
 .buyBox {
   display: flex;
   flex-direction: column;
@@ -106,6 +115,7 @@
   text-align: center;
 }
 
+/* Used as both the Add to Cart button and the Sign in to buy link. */
 .addBtn {
   display: inline-block;
   background: var(--color-accent);
@@ -144,8 +154,42 @@
   margin: 0;
 }
 
-.status {
-  padding: 2rem;
-  color: var(--color-text-secondary);
-  text-align: center;
+/* Skeleton loading state
+   Renders while the product fetch is in flight.
+   The animation name references the global keyframe in index.css. */
+
+/* Base class for all skeleton bars in this file. */
+.skeletonLine {
+  background: var(--color-placeholder);
+  border-radius: 3px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
+
+/* Back-link placeholder at the top of the page. */
+.skeletonBack { height: 0.9rem; width: 130px; margin-bottom: 1.25rem; }
+
+/* Square placeholder occupying the same grid cell as the real product image. */
+.skeletonImage {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-placeholder);
+  border-radius: 6px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Right column of the skeleton: stacks info bars with the same gap as .info. */
+.skeletonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* Info line sizes are proportional to the real content they approximate. */
+.skeletonName  { height: 1.5rem; width: 75%; border-radius: 4px; }
+.skeletonPrice { height: 1.6rem; width: 40%; border-radius: 4px; }
+.skeletonStock { height: 0.9rem; width: 55%; }
+.skeletonDesc  { height: 0.9rem; width: 100%; }
+/* Second description bar is shorter to simulate a partial final line. */
+.skeletonDescShort { width: 65%; }
+/* Button placeholder matches the real addBtn height. */
+.skeletonBtn   { height: 2.4rem; width: 180px; border-radius: 4px; margin-top: 0.5rem; }

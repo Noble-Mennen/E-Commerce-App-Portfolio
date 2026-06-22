@@ -169,8 +169,18 @@ Branch: `feat/frontend-improvements`
 - `Orders.module.css` — added `.orderLink`, `.cancelBtn`, `.cancelError`.
 - `OrderDetail.module.css` — added `.cancelBtn`, `.cancelError`.
 
+**16f — Loading skeletons and empty states**
+- `client/src/index.css` — added global `@keyframes skeleton-pulse` (opacity pulse, theme-agnostic).
+- `Home.jsx` — replaced `Loading products…` text with a 8-card skeleton grid matching the real `ProductCard` shape. Improved empty state: shows exact search term in message and a **Clear search** button when a search yields no results.
+- `Home.module.css` — added skeleton classes (`.cardSkeleton`, `.cardImageSkeleton`, `.cardNameSkeleton`, `.cardPriceSkeleton`, `.cardBtnSkeleton`, `.searchInputSkeleton`) and empty-state classes (`.emptyState`, `.emptyText`, `.clearSearchBtn`).
+- `Orders.jsx` — replaced `Loading orders…` text with a full skeleton list (heading + 4 skeleton rows) that matches the real order card layout.
+- `Orders.module.css` — added skeleton classes (`.skeletonList`, `.skeletonCard`, `.skeletonMeta`, `.skeletonRight`, `.skeletonLine` + width variants).
+- `OrderDetail.jsx` — replaced `Loading order…` text with a skeleton that mirrors the two-column header and card with 3 skeleton table rows.
+- `OrderDetail.module.css` — added skeleton classes matching the header/card structure.
+- `ProductDetail.jsx` — replaced `Loading…` text with a two-column skeleton matching the real product detail layout (image square + info lines).
+- `ProductDetail.module.css` — added skeleton classes (`.skeletonImage`, `.skeletonInfo`, `.skeletonName`, `.skeletonPrice`, `.skeletonStock`, `.skeletonDesc`, `.skeletonBtn`).
+
 **Still to do (Task 16):**
-- Better empty states and loading skeletons
 - Product category or price-range filter on the Home page
 
 ---
@@ -184,7 +194,7 @@ Branch: `feat/frontend-improvements`
 - Self/Owner routes: compare `req.user.id` against the resource's `user_id` — return 403 (not 404) if they don't match
 - DB transactions: acquire client with `pool.connect()`, use BEGIN/COMMIT/ROLLBACK, always `client.release()` in a finally block
 - Cart/checkout user identity always comes from `req.user.id`, never from the URL
-- Comments: explain WHY, not WHAT. Never reference task numbers in code comments.
+- Comments: add comments to all new and changed files. Include a file-level comment at the top of each file, section comments for logical groups of code, and inline comments for any logic that is not immediately obvious. Never reference task numbers in comments.
 - **Line endings:** Every new file must be converted to LF (no BOM) after creation using:
   ```powershell
   $utf8NoBom = New-Object System.Text.UTF8Encoding $false
@@ -213,7 +223,8 @@ fix/checkout-stock-lock      ← merged to main
 fix/checkout-deadlock        ← merged to main
 fix/isAdmin-auth             ← merged to main
 feat/admin-ui                ← merged to main
-feat/order-cancellation      <- committed, ready to merge
+feat/order-cancellation      ← merged to main
+feat/loading-empty-states    ← active
 main
 ```
 
@@ -231,4 +242,4 @@ main
 
 ## First task for next session
 
-Merge `feat/order-cancellation` to `main`, then continue Task 16 by picking up the next item from the **Still to do (Task 16)** list above. Create a new branch off `main` for the work.
+Merge `feat/loading-empty-states` to `main`, then continue Task 16 with the remaining item from the **Still to do (Task 16)** list above (product category or price-range filter on the Home page). Create a new branch off `main` for the work.

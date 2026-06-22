@@ -1,3 +1,6 @@
+/* Home.module.css: Styles for the product listing page.
+   All colour values use CSS custom properties from index.css. */
+
 .page {
   max-width: 1400px;
   margin: 0 auto;
@@ -8,6 +11,7 @@
   margin-bottom: 1.5rem;
 }
 
+/* Full-width input capped at a comfortable reading width. */
 .searchInput {
   width: 100%;
   max-width: 480px;
@@ -23,18 +27,109 @@
   box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
 }
 
+/* auto-fill lets the grid add/remove columns responsively without explicit breakpoints. */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.25rem;
 }
 
-.status {
-  color: var(--color-text-secondary);
-  padding: 1rem 0;
-}
-
 .error {
   color: var(--color-error);
   padding: 1rem 0;
+}
+
+/* Skeleton loading state
+   Renders while the product fetch is in flight.
+   The animation name references the global keyframe in index.css. */
+
+/* Placeholder for the search input bar during loading. */
+.searchInputSkeleton {
+  width: 100%;
+  max-width: 480px;
+  height: 2.4rem;
+  background: var(--color-placeholder);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Card shell that matches the real ProductCard dimensions and padding. */
+.cardSkeleton {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Square placeholder matching the product image aspect ratio. */
+.cardImageSkeleton {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-placeholder);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Narrow bar representing the product name text. */
+.cardNameSkeleton {
+  height: 0.95rem;
+  width: 80%;
+  background: var(--color-placeholder);
+  border-radius: 3px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Shorter bar representing the price. */
+.cardPriceSkeleton {
+  height: 1.1rem;
+  width: 40%;
+  background: var(--color-placeholder);
+  border-radius: 3px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Full-width bar representing the Add to Cart button. */
+.cardBtnSkeleton {
+  height: 2rem;
+  width: 100%;
+  background: var(--color-placeholder);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  margin-top: auto;
+}
+
+/* Empty state
+   Shown when products are loaded but the search returns no matches. */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.emptyText {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+}
+
+/* Resets the search field so the user can see all products again. */
+.clearSearchBtn {
+  background: none;
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  padding: 0.45rem 1.25rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--color-link);
+  transition: background 0.12s;
+}
+
+.clearSearchBtn:hover {
+  background: var(--color-placeholder);
 }

@@ -19,8 +19,8 @@
   text-decoration: underline;
 }
 
-/* Two-column header row: order ID and date on the left, badge/total/cancel on the right.
-   flex-wrap allows it to stack on narrow screens. */
+/* Two-column header: order ID/date on the left, badge/total/cancel on the right.
+   flex-wrap lets it stack on narrow screens without a media query. */
 .header {
   display: flex;
   justify-content: space-between;
@@ -55,7 +55,8 @@
   font-weight: 700;
 }
 
-/* Status badges — same tokens as Orders page */
+/* Status badge styles — one class per possible status value.
+   Same colour tokens as Orders.module.css so badges look identical on both pages. */
 .statusPending {
   font-size: 0.78rem;
   font-weight: 600;
@@ -126,6 +127,7 @@
   text-transform: uppercase;
 }
 
+/* Heavier divider separates the totals row from the line items. */
 .table tfoot tr {
   border-top: 2px solid var(--color-border);
 }
@@ -141,7 +143,8 @@
   font-size: 1rem;
 }
 
-/* Cancel button; sits in headerRight below the status badge and total. */
+/* Cancel button; sits in headerRight below the status badge and total.
+   Red outline signals a destructive action. */
 .cancelBtn {
   background: none;
   border: 1px solid var(--color-error);
@@ -173,12 +176,53 @@
   margin: 0;
 }
 
-.status {
-  padding: 2rem;
-  color: var(--color-text-secondary);
-}
-
 .error {
   padding: 2rem;
   color: var(--color-error);
 }
+
+/* Skeleton loading state
+   Renders while the order fetch is in flight.
+   The animation name references the global keyframe in index.css. */
+
+/* Base class for all skeleton bars in this file. */
+.skeletonLine {
+  background: var(--color-placeholder);
+  border-radius: 3px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Skeleton back link (narrow bar at the top of the page). */
+.skeletonBack { height: 0.9rem; width: 120px; margin-bottom: 1.25rem; }
+
+/* Left column of the header skeleton: title and date bars. */
+.skeletonHeadLeft  { display: flex; flex-direction: column; gap: 0.4rem; }
+.skeletonTitle     { height: 1.5rem; width: 160px; border-radius: 4px; }
+.skeletonDate      { height: 0.8rem; width: 120px; }
+
+/* Right column of the header skeleton: badge and total bars. */
+.skeletonHeadRight { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+/* Pill border-radius matches the real status badge shape. */
+.skeletonBadge     { height: 1.1rem; width: 72px; border-radius: 12px; }
+.skeletonTotal     { height: 1.3rem; width: 80px; border-radius: 4px; }
+
+/* Items card: section title bar above the rows. */
+.skeletonSectionTitle { height: 1rem; width: 60px; margin-bottom: 1rem; }
+
+/* Column of skeleton table rows. */
+.skeletonRows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Each row has 4 flex cells (product name + qty + unit price + line total). */
+.skeletonTableRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Product name cell is wider than the three numeric cells. */
+.skeletonCell   { height: 0.85rem; flex: 3; }
+.skeletonCellSm { height: 0.85rem; flex: 1; }

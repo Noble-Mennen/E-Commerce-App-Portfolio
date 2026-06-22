@@ -20,7 +20,8 @@
   gap: 0.75rem;
 }
 
-/* Card is now a div so the cancel button can sit as a sibling to the Link. */
+/* Card is a div so the cancel button can sit as a sibling to the Link
+   without nesting a button inside an anchor (invalid HTML). */
 .orderCard {
   display: flex;
   align-items: center;
@@ -36,7 +37,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Navigable portion of the card; takes up all available space. */
+/* Navigable portion of the card; flex: 1 lets it fill all space beside the cancel button. */
 .orderLink {
   display: flex;
   justify-content: space-between;
@@ -46,7 +47,7 @@
   color: inherit;
 }
 
-/* Left side of the link: stacks the order ID above the date. */
+/* Left column: stacks the order ID above the date. */
 .orderMeta {
   display: flex;
   flex-direction: column;
@@ -64,7 +65,7 @@
   color: var(--color-text-muted);
 }
 
-/* Right side of the link: total and status badge side by side. */
+/* Right column: total and status badge side by side. */
 .orderRight {
   display: flex;
   align-items: center;
@@ -76,7 +77,7 @@
   font-size: 1rem;
 }
 
-/* Status badges */
+/* Status badge styles — one class per possible status value. */
 .statusPending {
   font-size: 0.78rem;
   font-weight: 600;
@@ -113,6 +114,7 @@
   color: var(--color-badge-cancelled-text);
 }
 
+/* Empty state shown when the user has no orders yet. */
 .empty {
   color: var(--color-text-secondary);
   margin-bottom: 1rem;
@@ -127,7 +129,7 @@
   text-decoration: underline;
 }
 
-/* Cancel button; red outline matches the destructive action style used elsewhere. */
+/* Cancel button; red outline signals a destructive action. */
 .cancelBtn {
   background: none;
   border: 1px solid var(--color-error);
@@ -161,12 +163,57 @@
   margin-bottom: 1rem;
 }
 
-.status {
-  padding: 2rem;
-  color: var(--color-text-secondary);
-}
-
 .error {
   padding: 2rem;
   color: var(--color-error);
 }
+
+/* Skeleton loading state
+   Renders while the order fetch is in flight.
+   The animation name references the global keyframe in index.css. */
+
+/* Column of skeleton rows that matches the gap of the real .list. */
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Skeleton card shell that matches the real orderCard dimensions. */
+.skeletonCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+}
+
+/* Left column: stacks the order-id and date placeholders. */
+.skeletonMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Right column: total and badge placeholders side by side. */
+.skeletonRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Base class for all skeleton bars in this file. */
+.skeletonLine {
+  background: var(--color-placeholder);
+  border-radius: 3px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Width variants sized to approximate the real content they replace. */
+.skeletonLineId    { height: 0.95rem; width: 100px; }
+.skeletonLineDate  { height: 0.75rem; width: 70px; }
+.skeletonLineTotal { height: 1rem;    width: 55px; }
+/* Pill border-radius matches the real status badge shape. */
+.skeletonLineBadge { height: 1.1rem;  width: 65px; border-radius: 12px; }

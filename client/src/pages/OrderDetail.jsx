@@ -18,17 +18,19 @@ const STATUS_CLASS = {
 export default function OrderDetail() {
   const { id } = useParams();
 
-  // Order data state.
+  // Order data and fetch state.
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Cancel request state.
+  // Cancel request state — separate from the fetch state so the two don't conflict.
   const [cancelling, setCancelling] = useState(false);
   const [cancelError, setCancelError] = useState(null);
 
-  // Fetch the order (with its items) whenever the id param changes.
+  // Re-fetch whenever the id param changes (e.g. browser back/forward).
   useEffect(() => {
+    setLoading(true);
+    setError(null);
     getOrder(id)
       .then(data => setOrder(data.order))
       .catch(err => setError(err.message))
@@ -43,7 +45,7 @@ export default function OrderDetail() {
     setCancelling(true);
     try {
       await cancelOrder(id);
-      // Flip the status in local state; no need to re-fetch the full order.
+      // Flip the status in local state; avoids a full re-fetch for a single field change.
       setOrder(prev => ({ ...prev, status: 'cancelled' }));
     } catch (err) {
       setCancelError(err.message);
@@ -52,9 +54,46 @@ export default function OrderDetail() {
     }
   }
 
-  if (loading) return <p className={styles.status}>Loading order…</p>;
-  if (error)   return <p className={styles.error}>{error}</p>;
-  if (!order)  return null;
+  // Show a skeleton that mirrors the two-column header and items card layout.
+  if (loading) {
+    return (
+      <main className={styles.page}>
+        {/* Back-link placeholder */}
+        <div className={`${styles.skeletonLine} ${styles.skeletonBack}`} />
+
+        {/* Header skeleton: left (title + date) and right (badge + total) columns */}
+        <div className={styles.header}>
+          <div className={styles.skeletonHeadLeft}>
+            <div className={`${styles.skeletonLine} ${styles.skeletonTitle}`} />
+            <div className={`${styles.skeletonLine} ${styles.skeletonDate}`} />
+          </div>
+          <div className={styles.skeletonHeadRight}>
+            <div className={`${styles.skeletonLine} ${styles.skeletonBadge}`} />
+            <div className={`${styles.skeletonLine} ${styles.skeletonTotal}`} />
+          </div>
+        </div>
+
+        {/* Items card skeleton: section heading + 3 table row placeholders */}
+        <div className={styles.card}>
+          <div className={`${styles.skeletonLine} ${styles.skeletonSectionTitle}`} />
+          <div className={styles.skeletonRows}>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className={styles.skeletonTableRow}>
+                {/* Product name cell is wider (flex: 3) than the numeric cells (flex: 1). */}
+                <div className={`${styles.skeletonLine} ${styles.skeletonCell}`} />
+                <div className={`${styles.skeletonLine} ${styles.skeletonCellSm}`} />
+                <div className={`${styles.skeletonLine} ${styles.skeletonCellSm}`} />
+                <div className={`${styles.skeletonLine} ${styles.skeletonCellSm}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (error)  return <p className={styles.error}>{error}</p>;
+  if (!order) return null;
 
   // Resolve the badge class name once; falls back to pending style for unknown statuses.
   const statusClass = STATUS_CLASS[order.status] ?? 'statusPending';
@@ -63,6 +102,7 @@ export default function OrderDetail() {
     <main className={styles.page}>
       <Link to="/orders" className={styles.back}>← Back to Orders</Link>
 
+      {/* Two-column header: order ID and date on the left; badge, total, and cancel on the right. */}
       <div className={styles.header}>
         <div>
           <h1 className={styles.heading}>Order #{order.id}</h1>
@@ -87,10 +127,12 @@ export default function OrderDetail() {
             </button>
           )}
 
+          {/* Inline error shown below the cancel button when the request fails. */}
           {cancelError && <p className={styles.cancelError}>{cancelError}</p>}
         </div>
       </div>
 
+      {/* Items table with a totals row in tfoot. */}
       <div className={styles.card}>
         <h2 className={styles.sectionTitle}>Items</h2>
         <table className={styles.table}>
