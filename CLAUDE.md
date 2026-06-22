@@ -180,10 +180,6 @@ Branch: `feat/frontend-improvements`
 - `ProductDetail.jsx` — replaced `Loading…` text with a two-column skeleton matching the real product detail layout (image square + info lines).
 - `ProductDetail.module.css` — added skeleton classes (`.skeletonImage`, `.skeletonInfo`, `.skeletonName`, `.skeletonPrice`, `.skeletonStock`, `.skeletonDesc`, `.skeletonBtn`).
 
-**Still to do (Task 16):**
-- Product category or price-range filter on the Home page
-
----
 
 ## Patterns and conventions
 
