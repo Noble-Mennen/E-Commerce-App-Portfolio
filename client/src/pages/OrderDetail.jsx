@@ -1,8 +1,13 @@
+// OrderDetail.jsx: Shows a single order with its line items.
+// Pending orders display a Cancel button in the header. On success, the local
+// order state is updated so the status badge flips without a page re-fetch.
+
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getOrder } from '../api/orders.js';
+import { getOrder, cancelOrder } from '../api/orders.js';
 import styles from './OrderDetail.module.css';
 
+// Maps each order status to the CSS module class name for its badge.
 const STATUS_CLASS = {
   pending:   'statusPending',
   paid:      'statusPaid',
@@ -12,10 +17,17 @@ const STATUS_CLASS = {
 
 export default function OrderDetail() {
   const { id } = useParams();
+
+  // Order data state.
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Cancel request state.
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelError, setCancelError] = useState(null);
+
+  // Fetch the order (with its items) whenever the id param changes.
   useEffect(() => {
     getOrder(id)
       .then(data => setOrder(data.order))
@@ -23,10 +35,28 @@ export default function OrderDetail() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  // Confirm with the user, send the cancel request, then update local state
+  // so the status badge and button disappear without a round-trip re-fetch.
+  async function handleCancel() {
+    if (!window.confirm(`Cancel Order #${id}? This cannot be undone.`)) return;
+    setCancelError(null);
+    setCancelling(true);
+    try {
+      await cancelOrder(id);
+      // Flip the status in local state; no need to re-fetch the full order.
+      setOrder(prev => ({ ...prev, status: 'cancelled' }));
+    } catch (err) {
+      setCancelError(err.message);
+    } finally {
+      setCancelling(false);
+    }
+  }
+
   if (loading) return <p className={styles.status}>Loading order…</p>;
   if (error)   return <p className={styles.error}>{error}</p>;
   if (!order)  return null;
 
+  // Resolve the badge class name once; falls back to pending style for unknown statuses.
   const statusClass = STATUS_CLASS[order.status] ?? 'statusPending';
 
   return (
@@ -45,6 +75,19 @@ export default function OrderDetail() {
         <div className={styles.headerRight}>
           <span className={styles[statusClass]}>{order.status}</span>
           <span className={styles.total}>${Number(order.total).toFixed(2)}</span>
+
+          {/* Cancel button only shown while the order is still pending. */}
+          {order.status === 'pending' && (
+            <button
+              onClick={handleCancel}
+              disabled={cancelling}
+              className={styles.cancelBtn}
+            >
+              {cancelling ? 'Cancelling…' : 'Cancel Order'}
+            </button>
+          )}
+
+          {cancelError && <p className={styles.cancelError}>{cancelError}</p>}
         </div>
       </div>
 

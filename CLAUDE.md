@@ -162,8 +162,14 @@ Branch: `feat/frontend-improvements`
 - `App.jsx` — added `AdminRoute` wrapper with nested `/admin/products` route.
 - `Header.jsx` — "Admin" nav link shown only when `user.is_admin` is true.
 
+**16e — Order cancellation**
+- `client/src/api/orders.js` — added `cancelOrder(id)` sending `PUT /api/orders/:id` with `{ status: 'cancelled' }`.
+- `Orders.jsx` — restructured order cards from `<Link>` to `<div>` (button-inside-anchor is invalid HTML); cancel button shown only for `pending` orders; updates local state on success.
+- `OrderDetail.jsx` — cancel button in the header area, shown only for `pending` orders; flips local `order.status` to `'cancelled'` on success.
+- `Orders.module.css` — added `.orderLink`, `.cancelBtn`, `.cancelError`.
+- `OrderDetail.module.css` — added `.cancelBtn`, `.cancelError`.
+
 **Still to do (Task 16):**
-- Order cancellation button on Orders and OrderDetail pages
 - Better empty states and loading skeletons
 - Product category or price-range filter on the Home page
 
@@ -206,7 +212,8 @@ feat/admin-role              ← merged to main
 fix/checkout-stock-lock      ← merged to main
 fix/checkout-deadlock        ← merged to main
 fix/isAdmin-auth             ← merged to main
-feat/admin-ui                ← committed, ready to merge
+feat/admin-ui                ← merged to main
+feat/order-cancellation      <- committed, ready to merge
 main
 ```
 
@@ -224,4 +231,4 @@ main
 
 ## First task for next session
 
-Merge `feat/admin-ui` to `main`, then continue Task 16 by picking up the next item from the **Still to do (Task 16)** list above. Create a new branch off `main` for the work.
+Merge `feat/order-cancellation` to `main`, then continue Task 16 by picking up the next item from the **Still to do (Task 16)** list above. Create a new branch off `main` for the work.

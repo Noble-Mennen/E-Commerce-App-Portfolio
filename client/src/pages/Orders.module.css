@@ -1,3 +1,6 @@
+/* Orders.module.css: Styles for the order list page.
+   All colour values use CSS custom properties from index.css. */
+
 .page {
   max-width: 900px;
   margin: 0 auto;
@@ -10,22 +13,22 @@
   margin: 0 0 1.25rem;
 }
 
+/* Stacks order cards in a vertical column with consistent spacing. */
 .list {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
+/* Card is now a div so the cancel button can sit as a sibling to the Link. */
 .orderCard {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 1rem 1.25rem;
-  text-decoration: none;
-  color: inherit;
   transition: box-shadow 0.15s;
 }
 
@@ -33,6 +36,17 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Navigable portion of the card; takes up all available space. */
+.orderLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Left side of the link: stacks the order ID above the date. */
 .orderMeta {
   display: flex;
   flex-direction: column;
@@ -50,6 +64,7 @@
   color: var(--color-text-muted);
 }
 
+/* Right side of the link: total and status badge side by side. */
 .orderRight {
   display: flex;
   align-items: center;
@@ -110,6 +125,40 @@
 
 .shopLink:hover {
   text-decoration: underline;
+}
+
+/* Cancel button; red outline matches the destructive action style used elsewhere. */
+.cancelBtn {
+  background: none;
+  border: 1px solid var(--color-error);
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-error);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.12s;
+}
+
+.cancelBtn:hover:not(:disabled) {
+  background: var(--color-error-bg);
+}
+
+.cancelBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Error banner shown when a cancel request fails. */
+.cancelError {
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
 }
 
 .status {
