@@ -143,6 +143,16 @@ Branch: `feat/frontend-improvements`
 - `client/src/index.css` — all color tokens defined as CSS custom properties under `:root` (light) and `[data-theme="dark"]`. Includes `color-scheme` for native browser UI elements.
 - Header toggle button calls `useTheme().toggle()`; label switches between "Dark" and "Light".
 - All 11 CSS modules updated to use `var(--color-*)` tokens instead of hardcoded values.
+- `client/index.html` inline script sets `data-theme` before React mounts (prevents flash of light theme for dark-mode users). Wrapped in try/catch for Safari Private Browsing.
+- Remaining two hardcoded `#fff` shorthand values in `Header.module.css` (`.cartLink:hover outline`, `.authBtn border`) converted to `var(--color-header-text)`.
+- `Cart.jsx` debounce timer now cleaned up on `CartItem` unmount via `useEffect` teardown.
+- `Checkout.jsx` redirect guard checks `cart !== null` before redirecting on empty cart, preventing premature redirect on fresh page load.
+
+**16c — Code review fixes (backend)**
+- `src/data/checkout.data.js` — `FOR UPDATE OF p` added to lock product rows during stock check (prevents overselling under concurrent load). `ORDER BY p.id ASC` enforces consistent lock acquisition order to prevent deadlocks. Lives on `fix/checkout-stock-lock` and `fix/checkout-deadlock`.
+- `src/middleware/isAdmin.js` — product write routes now require `is_admin = true`; any authenticated user can no longer mutate products. `isAdmin` middleware returns 401 for unauthenticated requests and 403 for non-admin, making it safe to use standalone. Lives on `feat/admin-role` and `fix/isAdmin-auth`.
+- `src/data/auth.data.js`, `src/data/users.data.js` — `is_admin` included in user SELECT so `req.user.is_admin` is available on every authenticated request.
+- `src/data/products.data.js` — stale comment example corrected (no `updated_at = now()` in the dynamic SET builder).
 
 **Still to do (Task 16):**
 - Admin UI (add/edit/delete products from the browser)
@@ -187,6 +197,10 @@ feat/orders-crud
 docs/swagger
 feat/frontend
 feat/frontend-improvements   ← active branch for Task 16 and beyond
+feat/admin-role              ← merged to main
+fix/checkout-stock-lock      ← merged to main
+fix/checkout-deadlock        ← pending merge (ORDER BY p.id deadlock fix)
+fix/isAdmin-auth             ← pending merge (401/403 split in isAdmin.js)
 main
 ```
 
@@ -204,10 +218,14 @@ main
 
 ## First task for next session
 
-**Please run a code review of the `feat/frontend-improvements` branch before any new work begins.**
+**Please run a code review of the three pending branches before any new work begins.**
 
-Compare it against `main` and check for:
-1. Correctness — do the image and dark mode features work as described above?
-2. Consistency — do all CSS modules use `var(--color-*)` tokens with no hardcoded colours left over?
-3. Any regressions introduced in the backend files touched during Task 16a (products.data.js, products.service.js, products.controller.js, cart.data.js).
-4. Anything that should be fixed before merging to main.
+Three branches have uncommitted fixes that have not yet been merged to `main`:
+- `feat/frontend-improvements` — localStorage FOUC guard, Header.module.css token cleanup, Cart.jsx debounce teardown, Checkout.jsx redirect guard
+- `fix/checkout-deadlock` — `ORDER BY p.id` to prevent deadlocks under concurrent checkout
+- `fix/isAdmin-auth` — 401/403 split in `isAdmin.js`
+
+Compare each against `main` and verify:
+1. The change matches the explanation recorded in Task 16c above.
+2. No regressions introduced in files adjacent to each change.
+3. Anything that should be fixed before merging to main.

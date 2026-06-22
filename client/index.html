@@ -6,8 +6,12 @@
     <title>ShopPort</title>
     <script>
       (function () {
-        var t = localStorage.getItem('shopport-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', t);
+        try {
+          var t = localStorage.getItem('shopport-theme') || 'light';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
       })();
     </script>
   </head>
