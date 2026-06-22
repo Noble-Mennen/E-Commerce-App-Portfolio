@@ -206,7 +206,7 @@ feat/admin-role              ← merged to main
 fix/checkout-stock-lock      ← merged to main
 fix/checkout-deadlock        ← merged to main
 fix/isAdmin-auth             ← merged to main
-feat/admin-ui                ← in progress
+feat/admin-ui                ← committed, ready to merge
 main
 ```
 
