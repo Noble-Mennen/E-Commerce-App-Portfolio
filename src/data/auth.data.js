@@ -28,7 +28,7 @@ async function findUserByUsername(username) {
 // Returns undefined if no user with that ID exists (e.g. account was deleted).
 async function findUserById(id) {
   const result = await pool.query(
-    'SELECT id, username, email, created_at FROM users WHERE id = $1',
+    'SELECT id, username, email, is_admin, created_at FROM users WHERE id = $1',
     [id]
   );
   return result.rows[0];
