@@ -1,3 +1,6 @@
+/* OrderDetail.module.css: Styles for the single-order detail page.
+   All colour values use CSS custom properties from index.css. */
+
 .page {
   max-width: 900px;
   margin: 0 auto;
@@ -16,6 +19,8 @@
   text-decoration: underline;
 }
 
+/* Two-column header row: order ID and date on the left, badge/total/cancel on the right.
+   flex-wrap allows it to stack on narrow screens. */
 .header {
   display: flex;
   justify-content: space-between;
@@ -37,6 +42,7 @@
   margin: 0;
 }
 
+/* Right column: stacks the status badge, total, cancel button, and any error. */
 .headerRight {
   display: flex;
   flex-direction: column;
@@ -86,6 +92,7 @@
   color: var(--color-badge-cancelled-text);
 }
 
+/* Card wrapping the items table. */
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -132,6 +139,38 @@
 .totalAmount {
   font-weight: 700;
   font-size: 1rem;
+}
+
+/* Cancel button; sits in headerRight below the status badge and total. */
+.cancelBtn {
+  background: none;
+  border: 1px solid var(--color-error);
+  border-radius: 4px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-error);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.cancelBtn:hover:not(:disabled) {
+  background: var(--color-error-bg);
+}
+
+.cancelBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inline error shown below the cancel button when the request fails. */
+.cancelError {
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  margin: 0;
 }
 
 .status {
