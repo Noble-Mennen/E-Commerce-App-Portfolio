@@ -84,4 +84,76 @@ async function createUserWithCart(username, email, passwordHash) {
   }
 }
 
-module.exports = { findUserByUsername, findUserById, createUserWithCart };
+// Find a user by their Google account ID.
+// Returns the user row without password_hash, or undefined if not found.
+// Called first in the Google OAuth strategy to check for a returning Google user.
+async function findUserByGoogleId(googleId) {
+  const result = await pool.query(
+    'SELECT id, username, email, is_admin, created_at FROM users WHERE google_id = $1',
+    [googleId]
+  );
+  return result.rows[0];
+}
+
+// Find a user by email address.
+// Used during Google OAuth to detect when a Google account's email matches an
+// existing local account so the two can be linked rather than duplicated.
+async function findUserByEmail(email) {
+  const result = await pool.query(
+    'SELECT id, username, email, is_admin, created_at FROM users WHERE email = $1',
+    [email]
+  );
+  return result.rows[0];
+}
+
+// Create a Google-authenticated user and their empty cart in a single transaction.
+// No password_hash is stored because Google handles credential verification.
+// Returns the new user row without password_hash.
+async function createGoogleUserWithCart(googleId, username, email) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const userResult = await client.query(
+      `INSERT INTO users (username, email, google_id)
+       VALUES ($1, $2, $3)
+       RETURNING id, username, email, is_admin, created_at`,
+      [username, email, googleId]
+    );
+    const user = userResult.rows[0];
+
+    await client.query('INSERT INTO carts (user_id) VALUES ($1)', [user.id]);
+
+    await client.query('COMMIT');
+    return user;
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+// Add a Google ID to an existing local account.
+// Called when a user who registered with a username and password later signs in
+// with Google using the same email address. Linking prevents a duplicate account
+// from being created and lets the user sign in either way going forward.
+// Returns the updated user row without password_hash.
+async function linkGoogleId(userId, googleId) {
+  const result = await pool.query(
+    `UPDATE users SET google_id = $1 WHERE id = $2
+     RETURNING id, username, email, is_admin, created_at`,
+    [googleId, userId]
+  );
+  return result.rows[0];
+}
+
+module.exports = {
+  findUserByUsername,
+  findUserById,
+  createUserWithCart,
+  findUserByGoogleId,
+  findUserByEmail,
+  createGoogleUserWithCart,
+  linkGoogleId,
+};

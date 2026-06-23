@@ -89,4 +89,34 @@ function me(req, res) {
   res.json({ user: req.user });
 }
 
-module.exports = { register, login, logout, me };
+// GET /api/auth/google
+// Initiates the Google OAuth flow by redirecting the browser to Google's
+// consent page. The profile and email scopes request the user's display name,
+// Google ID, and email address — the minimum needed to create an account.
+function googleAuth(req, res, next) {
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+}
+
+// GET /api/auth/google/callback
+// Handles the redirect back from Google after the user grants permission.
+// On success, Passport has established the session and req.user is populated,
+// so we redirect the browser to the frontend. On failure (user cancelled or
+// Google returned an error), we redirect to the login page.
+function googleCallback(req, res, next) {
+  passport.authenticate('google', (err, user) => {
+    if (err) return next(err);
+
+    if (!user) {
+      return res.redirect(
+        `${process.env.CLIENT_ORIGIN ?? 'http://localhost:5173'}/login`
+      );
+    }
+
+    req.logIn(user, (loginErr) => {
+      if (loginErr) return next(loginErr);
+      res.redirect(process.env.CLIENT_ORIGIN ?? 'http://localhost:5173');
+    });
+  })(req, res, next);
+}
+
+module.exports = { register, login, logout, me, googleAuth, googleCallback };

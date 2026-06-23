@@ -1,4 +1,4 @@
-﻿// auth.routes.js — Routes for authentication.
+// auth.routes.js — Routes for authentication.
 //
 // Router() creates a mini Express app that handles a subset of routes.
 // It is mounted at /api/auth in app.js, so a route defined as '/register'
@@ -142,5 +142,17 @@ router.post('/login',    authController.login);
 // If the check passes, it calls next() and the controller runs.
 router.post('/logout', isAuthenticated, authController.logout);
 router.get('/me',      isAuthenticated, authController.me);
+
+// Google OAuth routes — no isAuthenticated middleware because these are the
+// entry points for unauthenticated users.
+//
+// GET /api/auth/google
+//   Redirects the browser to Google's OAuth consent page.
+//
+// GET /api/auth/google/callback
+//   Google redirects back here after the user grants or denies permission.
+//   On success the session is established and the browser is sent to the frontend.
+router.get('/google',          authController.googleAuth);
+router.get('/google/callback', authController.googleCallback);
 
 module.exports = router;

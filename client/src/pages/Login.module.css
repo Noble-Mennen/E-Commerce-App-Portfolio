@@ -91,6 +91,52 @@
   margin-bottom: 0.25rem;
 }
 
+/* Horizontal rule with centered "or" text separating the local form from
+   the Google button. The lines are drawn with pseudo-element borders so no
+   extra HTML elements are needed. */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--color-border);
+}
+
+.dividerText {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* Google sign-in button — styled as a full-width outlined button to distinguish
+   it visually from the primary accent submit button above. */
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transition: background 0.15s;
+  margin-bottom: 0.25rem;
+}
+
+.googleBtn:hover {
+  background: var(--color-placeholder);
+}
+
 .footer {
   margin-top: 1.25rem;
   font-size: 0.85rem;
