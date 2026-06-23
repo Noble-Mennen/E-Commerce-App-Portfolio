@@ -101,8 +101,96 @@
   margin-top: auto;
 }
 
+/* Filter bar: price range inputs, sort select, and clear button.
+   align-items: flex-end lines the button up with the bottom of the inputs
+   so it sits level rather than anchored to the top of the row. */
+.filterBar {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Stacks the label text above its control so the layout is consistent
+   across the price inputs and the sort select. */
+.filterLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+/* Narrow number input for the min and max price bounds. */
+.priceInput {
+  width: 90px;
+  padding: 0.6rem 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  outline: none;
+}
+
+.priceInput:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+/* Sort select matches the visual weight and height of the price inputs. */
+.sortSelect {
+  padding: 0.6rem 0.5rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  outline: none;
+  background: var(--color-input-bg);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.sortSelect:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+}
+
+/* Inline clear button sits level with the inputs via the parent's align-items: flex-end. */
+.clearFiltersBtn {
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  background: none;
+  border: 1px solid var(--color-border-input);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--color-link);
+  transition: background 0.12s;
+}
+
+.clearFiltersBtn:hover {
+  background: var(--color-placeholder);
+}
+
+/* Skeleton placeholders for the filter bar controls during loading.
+   Heights match the rendered height of the real inputs and select. */
+.skeletonPriceInput {
+  width: 90px;
+  height: 2.4rem;
+  background: var(--color-placeholder);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonSortSelect {
+  width: 160px;
+  height: 2.4rem;
+  background: var(--color-placeholder);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
 /* Empty state
-   Shown when products are loaded but the search returns no matches. */
+   Shown when products are loaded but the active filters return no matches. */
 
 .emptyState {
   display: flex;
