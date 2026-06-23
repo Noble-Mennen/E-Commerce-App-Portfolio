@@ -126,7 +126,7 @@ Key decisions:
 - `apiFetch()` always sets `credentials: 'include'`; parses `{ error: { message } }` envelope.
 - CSS Modules per component; Amazon-inspired palette (`#131921` header, `#ff9900` accent, `#f0f2f2` body).
 
-### Task 16 — Frontend UI improvements (in progress)
+### Task 16 — Frontend UI improvements
 Branch: `feat/frontend-improvements`
 
 **Completed:**
@@ -180,6 +180,24 @@ Branch: `feat/frontend-improvements`
 - `ProductDetail.jsx` — replaced `Loading…` text with a two-column skeleton matching the real product detail layout (image square + info lines).
 - `ProductDetail.module.css` — added skeleton classes (`.skeletonImage`, `.skeletonInfo`, `.skeletonName`, `.skeletonPrice`, `.skeletonStock`, `.skeletonDesc`, `.skeletonBtn`).
 
+**16g — Product filters and sort**
+Branch: `feat/product-filters`
+- `Home.jsx` — added `minPrice`, `maxPrice`, and `sortBy` state; filtering now checks name, min price, and max price in sequence; `sorted` is a separate derived step that spreads and sorts `filtered` without mutating it; `clearAll` resets all controls at once; `emptyMessage` builds a contextual string naming whichever filters are active; skeleton updated to include filter bar placeholders.
+- `Home.module.css` — added `.filterBar`, `.filterLabel`, `.priceInput`, `.sortSelect`, `.clearFiltersBtn`, `.skeletonPriceInput`, `.skeletonSortSelect`. No existing classes modified.
+
+### Task 17 — Google OAuth login
+Branch: `feat/google-oauth`
+
+- Database: added nullable `google_id VARCHAR(255) UNIQUE` column to `users`; made `password_hash` nullable so Google-only accounts can exist without a password.
+- `src/data/auth.data.js` — added `findUserByGoogleId`, `findUserByEmail`, `createGoogleUserWithCart` (transaction: user + cart, no password_hash), `linkGoogleId`.
+- `src/config/passport.js` — added `GoogleStrategy` with find-or-create logic (lookup by google_id → link by email → create new account); `LocalStrategy` now explicitly blocks Google-only accounts from local login with a clear message.
+- `src/controllers/auth.controller.js` — added `googleAuth` (initiates OAuth redirect) and `googleCallback` (handles callback, redirects to frontend on success).
+- `src/routes/auth.routes.js` — added `GET /api/auth/google` and `GET /api/auth/google/callback`.
+- `client/src/pages/Login.jsx` — added "Sign in with Google" anchor using `VITE_API_URL` so it hits the Vite proxy in dev and the Render backend directly in production.
+- `client/src/pages/Login.module.css` — added `.divider` (horizontal rule with "or" text) and `.googleBtn`.
+- `.env.example` — documented `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL`.
+- `package.json` — added `passport-google-oauth20`.
+
 
 ## Patterns and conventions
 
@@ -220,7 +238,9 @@ fix/checkout-deadlock        ← merged to main
 fix/isAdmin-auth             ← merged to main
 feat/admin-ui                ← merged to main
 feat/order-cancellation      ← merged to main
-feat/loading-empty-states    ← active
+feat/loading-empty-states    ← merged to main
+feat/product-filters         ← merged to main
+feat/google-oauth            ← active
 main
 ```
 
@@ -238,4 +258,4 @@ main
 
 ## First task for next session
 
-Merge `feat/loading-empty-states` to `main`, then continue Task 16 with the remaining item from the **Still to do (Task 16)** list above (product category or price-range filter on the Home page). Create a new branch off `main` for the work.
+Merge `feat/google-oauth` to `main`. All core project objectives are now complete. Next steps are optional improvements — candidates include: adding a Google logo/icon to the Google sign-in button, improving the Account page to show whether the account uses Google or local login, or any other polish the user wants to pursue.
